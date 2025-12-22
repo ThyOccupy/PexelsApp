@@ -62,6 +62,10 @@ dependencies {
     //Coil
     implementation(libs.coil)
 
+    //Livedata in Compose
+    //todo replace Flow
+    implementation(libs.androidx.compose.livedata)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

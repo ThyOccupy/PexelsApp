@@ -3,15 +3,14 @@ package com.example.pexelsapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.pexelsapp.ui.screen.MainScreen
 import com.example.pexelsapp.ui.theme.PexelsAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -19,7 +18,7 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             ) {
                     installSplashScreen()
-                    MainScreen()
+                    MainScreen(viewModel)
                 }
             }
         }

@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.pexelsapp.domain.PhotoUiEntity
 
 @Composable
 fun ImagesGrid(
-    photosList: List<PhotoUI>
+    photosList: List<PhotoUiEntity>,
+    onPhotoClick: (PhotoUiEntity) -> Unit
 ) {
     Box(modifier = Modifier) {
         LazyVerticalStaggeredGrid(
@@ -44,7 +46,7 @@ fun ImagesGrid(
 
 @Composable
 fun PhotoCard(
-    photo: PhotoUI,
+    photo: PhotoUiEntity,
     onclick: () -> Unit
 ) {
     val ratio = countSize(photo.width, photo.height)
@@ -74,16 +76,6 @@ fun PhotoCard(
     }
 }
 
-fun countSize(width: Int, height: Int): Float {
-    val ratio: Float = width.toFloat() / height
-
-    return ratio
+private fun countSize(width: Int, height: Int): Float {
+    return width.toFloat() / height
 }
-
-
-data class PhotoUI (
-    val url: String,
-    val width: Int,
-    val height: Int,
-    val photographer: String
-)
