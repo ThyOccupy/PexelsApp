@@ -5,8 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pexelsapp.domain.HeaderItemEntity
 import com.example.pexelsapp.domain.PhotoUiEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel() : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+
+) : ViewModel() {
 
     private val headers = listOf(
         HeaderItemEntity("Ice", true),

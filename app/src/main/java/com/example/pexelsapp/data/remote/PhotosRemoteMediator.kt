@@ -11,9 +11,10 @@ import com.example.pexelsapp.data.database.entities.PexelsEntity
 import com.example.pexelsapp.data.toEntity
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class PhotosRemoteMediator(
+class PhotosRemoteMediator @Inject constructor(
     private val database: PexelsDatabase,
     private val api: PexelsApi,
     private val query: String

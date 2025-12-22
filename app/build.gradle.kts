@@ -82,12 +82,9 @@ dependencies {
     //Coil
     implementation(libs.coil)
 
-    //Livedata in Compose
-    //todo replace Flow
-    implementation(libs.androidx.compose.livedata)
-
     //Hilt
     implementation(libs.hilt)
+    implementation(libs.androidx.paging.compose)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 

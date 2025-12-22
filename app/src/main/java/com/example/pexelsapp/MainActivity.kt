@@ -7,10 +7,11 @@ import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.pexelsapp.ui.screen.MainScreen
 import com.example.pexelsapp.ui.theme.PexelsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             ) {
                     installSplashScreen()
-                    MainScreen(viewModel)
+                    MainScreen()
                 }
             }
         }
