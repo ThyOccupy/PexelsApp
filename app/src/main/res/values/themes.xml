@@ -2,4 +2,20 @@
 <resources>
 
     <style name="Theme.PexelsApp" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Splash Screen -->
+    <style name="Theme.App.Starting.SplashScreen" parent="Theme.SplashScreen">
+        <!-- Background -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+
+        <!-- AnimatedIcon -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_icon</item>
+
+        <!-- Duration -->
+        <item name="windowSplashScreenAnimationDuration">600</item>
+
+        <!-- After the splash screen, switch to the main theme -->
+        <item name="postSplashScreenTheme">@style/Theme.PexelsApp</item>
+    </style>
+
 </resources>
