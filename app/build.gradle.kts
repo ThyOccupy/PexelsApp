@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.retrofit)
     //Moshi
     implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi.kotlin)
 
     //Room + Room Coroutines support + Paging 3 Integration
     ksp(libs.androidx.room.compiler)
