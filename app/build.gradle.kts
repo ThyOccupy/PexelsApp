@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,6 +22,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        //Putting a key to BuildConfig
+        buildConfigField("String", "API_KEY", "\"${getLocalProperty("API_KEY")}\"")
     }
 
     buildTypes {
@@ -42,7 +47,20 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+}
+
+// Reading the key from local.properties
+fun getLocalProperty(key: String, file: String = "local.properties"): String {
+    val properties = Properties()
+    val localProperties = File(rootProject.projectDir, file)
+    if (localProperties.exists()) {
+        localProperties.inputStream().use { properties.load(it) }
+    } else {
+        logger.warn("File $file didn't found.")
+    }
+    return properties.getProperty(key, "")
 }
 
 dependencies {
