@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -65,6 +67,24 @@ dependencies {
     //Livedata in Compose
     //todo replace Flow
     implementation(libs.androidx.compose.livedata)
+
+    //Hilt
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    //Okhttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    //Retrofit
+    implementation(libs.retrofit)
+    //Moshi
+    implementation(libs.retrofit.converter.moshi)
+
+    //Room + Room Coroutines support + Paging 3 Integration
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.paging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
