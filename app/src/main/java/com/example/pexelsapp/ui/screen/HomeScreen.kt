@@ -50,9 +50,12 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
                 viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(newValue))
             }
         )
-        Headers(headers = headers){header ->
+        Headers(
+            headers = headers,
+            query = query
+        ){ header ->
             query = header.name
-            viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(header.name))
+            viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(query))
         }
         ProgressBar(
             isLoading = photos.loadState.refresh is LoadState.Loading
