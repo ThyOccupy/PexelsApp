@@ -40,7 +40,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
 
 
         var query by remember {
-            mutableStateOf("Christmas")
+            mutableStateOf("")
         }
 
         SearchBar(
