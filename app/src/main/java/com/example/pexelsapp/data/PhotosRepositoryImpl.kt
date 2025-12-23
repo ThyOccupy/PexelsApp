@@ -41,6 +41,11 @@ class PhotosRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getFeatureCollections(): List<String> {
-        TODO()
+        return withContext(Dispatchers.IO) {
+            return@withContext api.getFeaturedCollections().collection
+                .map { collection ->
+                    collection.title
+                }
+        }
     }
 }

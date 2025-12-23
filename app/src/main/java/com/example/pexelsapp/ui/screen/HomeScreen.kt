@@ -1,5 +1,6 @@
 package com.example.pexelsapp.ui.screen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,7 +21,6 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.MainViewModel
-import com.example.pexelsapp.ui.HeaderUiEntity
 import com.example.pexelsapp.ui.components.Headers
 import com.example.pexelsapp.ui.components.ImagesGrid
 import com.example.pexelsapp.ui.components.SearchBar
@@ -34,6 +35,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
     ) {
 
         val photos = viewModel.photos.collectAsLazyPagingItems()
+        val headers = viewModel.titles.collectAsState().value
 
 
         var query by remember {
@@ -46,16 +48,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
                 query = newValue
             }
         )
-
-        val headers = listOf(
-            HeaderUiEntity("Ice", true),
-            HeaderUiEntity("Watches", false),
-            HeaderUiEntity("Drawing", true),
-            HeaderUiEntity("Brick", false),
-            HeaderUiEntity("Architecture", false),
-        )
-
-        Headers(list = headers){}
+        Headers(headers = headers){}
 
         PhotoLoadErrorToast(photos.loadState)
 

@@ -18,20 +18,20 @@ import com.example.pexelsapp.ui.HeaderUiEntity
 
 @Composable
 fun Headers(
-    list: List<HeaderUiEntity>,
+    headers: List<HeaderUiEntity>,
     onHeaderClick: (HeaderUiEntity) -> Unit
 ) {
     LazyRow(
         modifier = Modifier
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
-        items(list.size) {index ->
+        items(headers.size) {index ->
             Header(
-                header = list[index],
-                onClick = {onHeaderClick(list[index])}
+                header = headers[index],
+                onClick = {onHeaderClick(headers[index])}
             )
 
-            if (index != list.lastIndex) {
+            if (index != headers.lastIndex) {
                 Spacer(Modifier.width(12.dp))
             }
         }

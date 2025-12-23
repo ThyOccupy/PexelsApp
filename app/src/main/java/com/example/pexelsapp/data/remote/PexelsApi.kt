@@ -1,7 +1,7 @@
 package com.example.pexelsapp.data.remote
 
-import com.example.pexelsapp.data.remote.dto.GetCollectionResponseBody
 import com.example.pexelsapp.data.remote.dto.GetQueryPhotosResponseBody
+import com.example.pexelsapp.data.remote.dto.QueryCollectionsDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,7 +21,9 @@ interface PexelsApi {
     ): GetQueryPhotosResponseBody
 
     @GET("collections/featured")
-    suspend fun getFeaturedCollections(): GetCollectionResponseBody
+    suspend fun getFeaturedCollections(
+        @Query("per_page") pageSize: Int = 20
+    ): QueryCollectionsDto
 
     companion object {
         private const val QUERY_PARAM_QUERY = "query"
