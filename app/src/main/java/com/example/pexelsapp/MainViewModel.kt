@@ -7,6 +7,7 @@ import androidx.paging.map
 import com.example.pexelsapp.domain.usecase.GetHeaderUseCase
 import com.example.pexelsapp.domain.usecase.GetPhotosUseCase
 import com.example.pexelsapp.ui.HeaderUiEntity
+import com.example.pexelsapp.ui.events.HomeScreenEvent
 import com.example.pexelsapp.ui.toHeaderUiEntity
 import com.example.pexelsapp.ui.toUiEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +40,14 @@ class MainViewModel @Inject constructor(
         initialTitles()
     }
 
-    fun setQuery(newQuery: String) {
+    fun onEvent(event: HomeScreenEvent) {
+        when(event){
+            is HomeScreenEvent.OnSearchQueryChange -> setQuery(event.query)
+            is HomeScreenEvent.OnExploreClicked -> initialPhotos()
+        }
+    }
+
+    private fun setQuery(newQuery: String) {
         _query.value = newQuery
     }
 

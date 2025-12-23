@@ -1,6 +1,5 @@
 package com.example.pexelsapp.data.remote
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -46,9 +45,6 @@ class PhotosRemoteMediator @Inject constructor(
                 }
             }
 
-            Log.d("RemoteMediator", "Requesting page $loadKey")
-
-
             val photos = if (query.isEmpty()) {
                 api.getPopularPhotos(page = loadKey, pageCount = state.config.pageSize)
             } else {
@@ -63,9 +59,6 @@ class PhotosRemoteMediator @Inject constructor(
                 val photosEntities = photos.photos.map { it.toEntity() }
                 database.pexelsDao.upsertAll(photosEntities)
             }
-
-            Log.d("RemoteMediator", "Finished transaction: ${photos.photos.isEmpty()}")
-
 
             MediatorResult.Success(
                 endOfPaginationReached = photos.photos.isEmpty()
