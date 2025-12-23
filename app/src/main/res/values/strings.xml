@@ -3,4 +3,14 @@
     <string name="no_results_found">No results found</string>
     <string name="explore">Explore</string>
     <string name="try_again">Try again</string>
+    <string name="error_400">Check the validity of the request</string>
+    <string name="error_401">Authorization required</string>
+    <string name="error_403">Access restricted</string>
+    <string name="error_404">Data not found</string>
+    <string name="error_429">Too many requests. Please try again in a minute</string>
+    <string name="error_500">Temporary server issues</string>
+    <string name="error_502">Service temporarily unavailable</string>
+    <string name="error_unknown_host">The server cannot be found. Check your internet connection and try again</string>
+    <string name="error_connect">Unable to connect to the server. The server may be temporarily unavailable. Try again later</string>
+    <string name="error_timeout">The server has been unresponsive for too long. Please check your internet connection and try again</string>
 </resources>
