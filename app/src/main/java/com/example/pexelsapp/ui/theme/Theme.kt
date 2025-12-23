@@ -2,6 +2,8 @@ package com.example.pexelsapp.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import android.view.View
+import android.view.WindowManager
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -9,7 +11,10 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Red,
@@ -48,6 +53,24 @@ fun PexelsAppTheme(
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
+
+    }
+    // Setting up the system UI (status bar)
+    val view: View = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val activity = view.context as Activity
+            val window = activity.window
+
+            window.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    attributes.layoutInDisplayCutoutMode =
+                        WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+                }
+                WindowCompat.setDecorFitsSystemWindows(this, false)
+            }
+            activity.actionBar?.hide()
+        }
     }
 
     MaterialTheme(
