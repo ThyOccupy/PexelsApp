@@ -1,5 +1,6 @@
 package com.example.pexelsapp.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -73,6 +74,7 @@ fun SearchBar(
         expanded = active,
         onExpandedChange = { active = it },
         modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 12.dp),
         colors = SearchBarDefaults.colors(
             containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
