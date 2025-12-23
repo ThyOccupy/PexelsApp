@@ -1,27 +1,25 @@
 package com.example.pexelsapp
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.pexelsapp.domain.HeaderItemEntity
-import com.example.pexelsapp.domain.PhotoUiEntity
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.example.pexelsapp.domain.usecase.GetPhotosUseCase
+import com.example.pexelsapp.ui.toUiEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-
+    private val getPhotosUseCase: GetPhotosUseCase
 ) : ViewModel() {
 
-    private val headers = listOf(
-        HeaderItemEntity("Ice", true),
-        HeaderItemEntity("Watches", false),
-        HeaderItemEntity("Drawing", false),
-        HeaderItemEntity("Brick", false),
-        HeaderItemEntity("Architecture", false),
-    )
-
-    private val photos = listOf<PhotoUiEntity>(
+    /*private val photos = listOf<PhotoUiEntity>(
         PhotoUiEntity(
             url = "https://images.pexels.com/photos/716658/pexels-photo-716658.jpeg",
             width = 6100,
@@ -46,12 +44,35 @@ class MainViewModel @Inject constructor(
             height = 3744,
             photographer = "George Dolgikh"
         )
-    )
+    )*/
 
-    private val _headersState = MutableLiveData(headers)
-    val headersState: LiveData<List<HeaderItemEntity>> = _headersState
+    private val _query = MutableStateFlow("Christmas")
+    val query: StateFlow<String> get() = _query
 
-    private val _photosState = MutableLiveData(photos)
-    val photosState: LiveData<List<PhotoUiEntity>> = _photosState
+    private val _photos = MutableStateFlow<PagingData<com.example.pexelsapp.ui.PhotoUiEntity>>(PagingData.empty())
+    val photos: StateFlow<PagingData<com.example.pexelsapp.ui.PhotoUiEntity>> get() = _photos
 
+    init {
+        observePhotos()
+    }
+
+    fun setQuery(newQuery: String) {
+        _query.value = newQuery
+    }
+
+    private fun observePhotos() {
+        viewModelScope.launch {
+            query.collectLatest { queryValue ->
+                getPhotosUseCase.execute(queryValue)
+                    .map { pagingData ->
+                        pagingData.map { photoModel ->
+                            photoModel.toUiEntity()
+                        }
+                    }
+                    .collectLatest { transformedPagingData ->
+                        _photos.value = transformedPagingData
+                    }
+            }
+        }
+    }
 }

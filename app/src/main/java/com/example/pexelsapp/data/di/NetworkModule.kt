@@ -1,6 +1,7 @@
 package com.example.pexelsapp.data.di
 
 import com.example.pexelsapp.Const
+import com.example.pexelsapp.data.remote.PexelsApi
 import com.example.pexelsapp.data.remote.interseptors.HeaderInterceptor
 import com.example.pexelsapp.data.remote.interseptors.cacheInterceptor
 import com.example.pexelsapp.data.remote.interseptors.loggingInterceptor
@@ -14,6 +15,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -45,12 +47,13 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(moshi: Moshi, client: OkHttpClient): Retrofit {
+    fun provideApi(moshi: Moshi, client: OkHttpClient): PexelsApi {
         return Retrofit.Builder()
             .baseUrl(Const.BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+            .create()
     }
 
 }

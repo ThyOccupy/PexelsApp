@@ -14,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.pexelsapp.domain.HeaderItemEntity
+import com.example.pexelsapp.ui.HeaderUiEntity
 
 @Composable
 fun Headers(
-    list: List<HeaderItemEntity>,
-    onHeaderClick: (HeaderItemEntity) -> Unit
+    list: List<HeaderUiEntity>,
+    onHeaderClick: (HeaderUiEntity) -> Unit
 ) {
     LazyRow(
         modifier = Modifier
@@ -40,7 +40,7 @@ fun Headers(
 
 @Composable
 fun Header(
-    header: HeaderItemEntity,
+    header: HeaderUiEntity,
     onClick: () -> Unit
 ) {
     val boxColor : Color

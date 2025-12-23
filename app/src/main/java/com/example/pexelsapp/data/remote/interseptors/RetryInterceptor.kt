@@ -7,7 +7,7 @@ val retryInterceptor = Interceptor { chain ->
     var request = chain.request()
     var response: Response = chain.proceed(request)
     var tryCount = 0
-    val maxLimit = 3
+    val maxLimit = 2
 
     while (!response.isSuccessful && tryCount < maxLimit) {
         tryCount++

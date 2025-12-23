@@ -2,6 +2,6 @@ package com.example.pexelsapp
 
 object Const {
 
-    const val BASE_URL = "https://www.pexels.com"
+    const val BASE_URL = "https://api.pexels.com/v1/"
 
 }

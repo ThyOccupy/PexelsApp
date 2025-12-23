@@ -6,13 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.pexelsapp.MainViewModel
 import com.example.pexelsapp.ui.components.BottomBar
 import com.example.pexelsapp.ui.navigation.NavGraph
 import com.example.pexelsapp.ui.navigation.rememberNavigationState
 
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
+fun MainScreen() {
     val navigationState = rememberNavigationState()
 
     Scaffold(
@@ -21,7 +20,7 @@ fun MainScreen(viewModel: MainViewModel) {
 
         NavGraph(
             navHostController = navigationState.navHostController,
-            homeScreenContent = { HomeScreen(viewModel) },
+            homeScreenContent = { HomeScreen() },
             bookmarkScreenContent = { Text(text = "BookmarkScreen", color = Color.Black) },
             modifier = Modifier.padding(paddingValues)
         )

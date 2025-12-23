@@ -17,12 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
-import com.example.pexelsapp.domain.PhotoUiEntity
+import com.example.pexelsapp.ui.PhotoUiEntity
 
 @Composable
 fun ImagesGrid(
-    photosList: List<PhotoUiEntity>,
+    photosList: LazyPagingItems<PhotoUiEntity>,
     onPhotoClick: (PhotoUiEntity) -> Unit
 ) {
     Box(modifier = Modifier) {
@@ -31,14 +32,12 @@ fun ImagesGrid(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(photosList.size) {index ->
-                PhotoCard(
-                    photosList[index]
-                ) {
+            items(photosList.itemCount) { index ->
+                photosList[index]?.let { photo ->
+                    PhotoCard(photo = photo) {}
+                    Log.d("CheckPhoto", "Photo in items")
 
                 }
-                Log.d("CheckPhoto", "Iam in items")
-
             }
         }
     }
@@ -72,7 +71,6 @@ fun PhotoCard(
             alignment = Alignment.Center,
             contentScale = ContentScale.Crop,
         )
-
     }
 }
 
