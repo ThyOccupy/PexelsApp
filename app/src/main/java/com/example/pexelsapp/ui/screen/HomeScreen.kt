@@ -23,6 +23,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.MainViewModel
 import com.example.pexelsapp.ui.components.Headers
 import com.example.pexelsapp.ui.components.ImagesGrid
+import com.example.pexelsapp.ui.components.ProgressBar
 import com.example.pexelsapp.ui.components.SearchBar
 import com.example.pexelsapp.ui.events.HomeScreenEvent
 
@@ -54,7 +55,9 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
             query = header.name
             viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(header.name))
         }
-
+        ProgressBar(
+            isLoading = photos.loadState.refresh is LoadState.Loading
+        )
         PhotoLoadErrorToast(photos.loadState)
 
         ImagesGrid(
