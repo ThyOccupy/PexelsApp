@@ -25,10 +25,10 @@ fun Headers(
         modifier = Modifier
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
-        items(headers.size) {index ->
+        items(headers.size) { index ->
             Header(
                 header = headers[index],
-                onClick = {onHeaderClick(headers[index])}
+                onClick = { onHeaderClick(it) }
             )
 
             if (index != headers.lastIndex) {
@@ -41,16 +41,15 @@ fun Headers(
 @Composable
 fun Header(
     header: HeaderUiEntity,
-    onClick: () -> Unit
+    onClick: (HeaderUiEntity) -> Unit
 ) {
-    val boxColor : Color
+    val boxColor: Color
     val textColor: Color
 
-    if(header.isSelected) {
+    if (header.isSelected) {
         boxColor = MaterialTheme.colorScheme.primaryContainer
         textColor = MaterialTheme.colorScheme.onPrimaryContainer
-    }
-    else {
+    } else {
         boxColor = MaterialTheme.colorScheme.secondaryContainer
         textColor = MaterialTheme.colorScheme.onSecondaryContainer
     }
@@ -64,7 +63,7 @@ fun Header(
                 shape = RoundedCornerShape(100)
             )
             .clip(RoundedCornerShape(100))
-            .clickable { onClick() }
+            .clickable { onClick(header) }
             .padding(horizontal = 20.dp, vertical = 10.dp)
 
     )

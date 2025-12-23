@@ -24,6 +24,7 @@ import com.example.pexelsapp.MainViewModel
 import com.example.pexelsapp.ui.components.Headers
 import com.example.pexelsapp.ui.components.ImagesGrid
 import com.example.pexelsapp.ui.components.SearchBar
+import com.example.pexelsapp.ui.events.HomeScreenEvent
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
@@ -46,13 +47,23 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
             query = query,
             onQueryChange = { newValue ->
                 query = newValue
+                viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(newValue))
             }
         )
-        Headers(headers = headers){}
+        Headers(headers = headers){header ->
+            query = header.name
+            viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(header.name))
+        }
 
         PhotoLoadErrorToast(photos.loadState)
 
-        ImagesGrid(photosList = photos){}
+        ImagesGrid(
+            photosList = photos,
+            onPhotoClick = {},
+            onExploreClick = {
+                viewModel.onEvent(HomeScreenEvent.OnExploreClicked)
+            }
+        )
 
     }
 }
