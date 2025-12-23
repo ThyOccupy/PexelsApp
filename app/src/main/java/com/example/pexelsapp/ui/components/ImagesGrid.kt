@@ -1,5 +1,6 @@
 package com.example.pexelsapp.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -33,7 +35,8 @@ import com.example.pexelsapp.ui.PhotoUiEntity
 fun ImagesGrid(
     photosList: LazyPagingItems<PhotoUiEntity>,
     onPhotoClick: (PhotoUiEntity) -> Unit,
-    onExploreClick: () -> Unit
+    onExploreClick: () -> Unit,
+    onRetryClick: () -> Unit
 ) {
     Box(modifier = Modifier) {
         LazyVerticalStaggeredGrid(
@@ -50,7 +53,8 @@ fun ImagesGrid(
         }
         NoResultsStub(
             photosList = photosList,
-            onExploreClick = onExploreClick
+            onExploreClick = onExploreClick,
+            onRetryClick = onRetryClick
         )
     }
 }
@@ -96,6 +100,7 @@ private fun countSize(width: Int, height: Int): Float {
 fun NoResultsStub(
     photosList: LazyPagingItems<PhotoUiEntity>,
     onExploreClick: () -> Unit,
+    onRetryClick: () -> Unit
 ) {
     when {
         photosList.loadState.refresh is LoadState.NotLoading && photosList.itemCount == 0 -> {
@@ -108,7 +113,27 @@ fun NoResultsStub(
             ) {
                 Text(text = stringResource(R.string.no_results_found))
                 Spacer(Modifier.height(12.dp))
-                ExploreButton(text = stringResource(R.string.explore), onClick = onExploreClick)
+                StubButton(text = stringResource(R.string.explore), onClick = onExploreClick)
+            }
+        }
+
+        photosList.loadState.refresh is LoadState.Error -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_internet_off),
+                    contentDescription = null
+                )
+                Spacer(Modifier.height(12.dp))
+                StubButton(
+                    text = stringResource(R.string.try_again),
+                    onClick = onRetryClick
+                )
             }
         }
     }

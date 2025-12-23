@@ -44,6 +44,7 @@ class MainViewModel @Inject constructor(
         when(event){
             is HomeScreenEvent.OnSearchQueryChange -> setQuery(event.query)
             is HomeScreenEvent.OnExploreClicked -> initialPhotos()
+            is HomeScreenEvent.onRetryClicked -> initialPhotos()
         }
     }
 
