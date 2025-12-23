@@ -1,6 +1,5 @@
 package com.example.pexelsapp.ui.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -65,6 +64,9 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
             onPhotoClick = {},
             onExploreClick = {
                 viewModel.onEvent(HomeScreenEvent.OnExploreClicked)
+            },
+            onRetryClick = {
+                viewModel.onEvent(HomeScreenEvent.onRetryClicked)
             }
         )
 
