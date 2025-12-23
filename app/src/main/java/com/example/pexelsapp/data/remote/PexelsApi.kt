@@ -1,5 +1,6 @@
 package com.example.pexelsapp.data.remote
 
+import com.example.pexelsapp.Const.CURATED_LIMIT
 import com.example.pexelsapp.Const.FEATURED_NUMBER
 import com.example.pexelsapp.data.remote.dto.GetQueryPhotosResponseBody
 import com.example.pexelsapp.data.remote.dto.QueryCollectionsDto
@@ -18,7 +19,7 @@ interface PexelsApi {
     @GET("curated")
     suspend fun getPopularPhotos(
         @Query(QUERY_PARAM_PAGE) page: Int,
-        @Query(QUERY_PARAM_PER_PAGE) pageCount: Int
+        @Query(QUERY_PARAM_PER_PAGE) pageCount: Int = CURATED_LIMIT
     ): GetQueryPhotosResponseBody
 
     @GET("collections/featured")
