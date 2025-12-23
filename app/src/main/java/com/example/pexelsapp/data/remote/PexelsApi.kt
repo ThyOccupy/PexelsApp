@@ -1,5 +1,6 @@
 package com.example.pexelsapp.data.remote
 
+import com.example.pexelsapp.Const.FEATURED_NUMBER
 import com.example.pexelsapp.data.remote.dto.GetQueryPhotosResponseBody
 import com.example.pexelsapp.data.remote.dto.QueryCollectionsDto
 import retrofit2.http.GET
@@ -22,7 +23,7 @@ interface PexelsApi {
 
     @GET("collections/featured")
     suspend fun getFeaturedCollections(
-        @Query("per_page") pageSize: Int = 20
+        @Query("per_page") pageSize: Int = FEATURED_NUMBER
     ): QueryCollectionsDto
 
     companion object {
