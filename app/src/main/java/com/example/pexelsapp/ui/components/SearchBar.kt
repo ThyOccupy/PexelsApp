@@ -11,17 +11,22 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pexelsapp.R
 import com.example.pexelsapp.ui.theme.PexelsAppTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,17 +34,31 @@ fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit
 ) {
-    var active by remember { mutableStateOf(false) }
+    var isActive by remember { mutableStateOf(false) }
+    val debounce = 500L
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(query) {
+        if (isActive && query.isNotEmpty()) {
+            coroutineScope.launch {
+                delay(debounce)
+                onQueryChange(query)
+            }
+        }
+    }
 
     SearchBar(
         inputField = {
             SearchBarDefaults.InputField(
                 query = query,
                 onQueryChange = onQueryChange,
-                onSearch = { active = false },
-                expanded = active,
-                onExpandedChange = { active = it },
-                placeholder = { Text(text = "Search") },
+                onSearch = {
+                    isActive = false
+                    onQueryChange(it)
+                },
+                expanded = isActive,
+                onExpandedChange = { isActive = it },
+                placeholder = { Text(text = stringResource(R.string.search_hint)) },
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_search),
@@ -48,13 +67,13 @@ fun SearchBar(
                     )
                 },
                 trailingIcon = {
-                    if (active) {
+                    if (isActive) {
                         IconButton(
                             onClick = {
                                 if (query.isNotEmpty()) {
                                     onQueryChange("")
                                 } else {
-                                    active = false
+                                    isActive = false
                                 }
                             }
                         ) {
@@ -71,8 +90,8 @@ fun SearchBar(
                 ),
             )
         },
-        expanded = active,
-        onExpandedChange = { active = it },
+        expanded = isActive,
+        onExpandedChange = { isActive = it },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 12.dp),
@@ -86,8 +105,6 @@ fun SearchBar(
 
     }
 }
-
-
 
 
 @Preview(showBackground = true)
