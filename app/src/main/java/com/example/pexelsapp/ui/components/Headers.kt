@@ -19,16 +19,24 @@ import com.example.pexelsapp.ui.HeaderUiEntity
 @Composable
 fun Headers(
     headers: List<HeaderUiEntity>,
+    query: String,
     onHeaderClick: (HeaderUiEntity) -> Unit
 ) {
+    val modifiedHeaders = headers.map { header ->
+        header.copy(isSelected = header.name.equals(query, ignoreCase = true))
+    }
+
     LazyRow(
         modifier = Modifier
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
-        items(headers.size) { index ->
+        items(modifiedHeaders.size) { index ->
             Header(
-                header = headers[index],
-                onClick = { onHeaderClick(it) }
+                header = modifiedHeaders[index],
+                onClick = {header ->
+                    header.isSelected !=header.isSelected
+                    onHeaderClick(header)
+                }
             )
 
             if (index != headers.lastIndex) {
