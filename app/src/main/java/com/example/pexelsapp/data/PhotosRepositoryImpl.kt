@@ -1,5 +1,6 @@
 package com.example.pexelsapp.data
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -47,6 +48,14 @@ class PhotosRepositoryImpl @Inject constructor(
                 .map { collection ->
                     collection.title
                 }
+        }
+    }
+
+    override suspend fun getPhotoById(id: Int): Flow<PhotoModel> {
+        return withContext(Dispatchers.IO) {
+            return@withContext database.pexelsDao.getFromDbById(id).map { photoEntity ->
+                photoEntity.toModel()
+            }
         }
     }
 }

@@ -14,4 +14,6 @@
     <string name="error_unknown_host">The server cannot be found. Check your internet connection and try again</string>
     <string name="error_connect">Unable to connect to the server. The server may be temporarily unavailable. Try again later</string>
     <string name="error_timeout">The server has been unresponsive for too long. Please check your internet connection and try again</string>
+    <string name="download">Download</string>
+    <string name="back">Back</string>
 </resources>
