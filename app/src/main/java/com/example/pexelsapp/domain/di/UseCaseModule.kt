@@ -1,11 +1,13 @@
 package com.example.pexelsapp.domain.di
 
+import com.example.pexelsapp.domain.usecase.DownloadImageUseCaseImpl
 import com.example.pexelsapp.domain.usecase.interfaces.GetHeaderUseCase
 import com.example.pexelsapp.domain.usecase.GetHeaderUseCaseImpl
 import com.example.pexelsapp.domain.usecase.GetPhotoByIdApiUseCaseImpl
 import com.example.pexelsapp.domain.usecase.GetPhotoByIdDbUseCaseImpl
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotosUseCase
 import com.example.pexelsapp.domain.usecase.GetPhotosUseCaseImpl
+import com.example.pexelsapp.domain.usecase.interfaces.DownloadImageUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdApiUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdDbUseCase
 import dagger.Binds
@@ -36,6 +38,12 @@ abstract class UseCaseModule {
     abstract fun bindGetPhotoByIdApiUseCase(
         getPhotoByIdUseCaseImpl: GetPhotoByIdApiUseCaseImpl
     ): GetPhotoByIdApiUseCase
+
+    @Binds
+    abstract fun bindDownloadImageUseCase(
+        downloadImageUseCaseImpl: DownloadImageUseCaseImpl
+    ): DownloadImageUseCase
+
 
 
 }
