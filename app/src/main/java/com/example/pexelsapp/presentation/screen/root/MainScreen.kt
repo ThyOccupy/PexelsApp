@@ -43,7 +43,11 @@ fun MainScreen() {
                     route = route,
                     onBackPressed = {
                     navigationState.goBack()
-                })
+                    },
+                    onExploreClick = {
+                        navigationState.navigateTo(route)
+                    }
+                )
             },
             modifier = Modifier.padding(paddingValues)
         )
