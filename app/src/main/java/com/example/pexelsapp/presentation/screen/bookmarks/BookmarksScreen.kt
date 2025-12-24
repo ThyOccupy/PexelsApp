@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -17,21 +19,26 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.presentation.common.components.photo.PhotoGrid
+import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 
 @Composable
 fun BookmarksScreen(
     viewModel: BookmarksScreenViewModel = hiltViewModel(),
-    onNavigateClick: (PhotoUiEntity) -> Unit
+    onPhotoClick: (PhotoUiEntity) -> Unit,
+    onExploreClick: () -> Unit
 ) {
 
     val bookmarks = viewModel.bookmarks.collectAsLazyPagingItems()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     BookmarksScreenLayout(
         photos = bookmarks,
+        isLoading = isLoading,
         onNavigateClick = {photo ->
-            onNavigateClick (photo)
-        }
+            onPhotoClick (photo)
+        },
+        onExploreClick = onExploreClick
     )
 
 }
@@ -39,6 +46,8 @@ fun BookmarksScreen(
 @Composable
 fun BookmarksScreenLayout(
     photos: LazyPagingItems<PhotoUiEntity>,
+    isLoading: Boolean,
+    onExploreClick: () -> Unit,
     onNavigateClick: (PhotoUiEntity) -> Unit
 ) {
     Column(
@@ -56,9 +65,11 @@ fun BookmarksScreenLayout(
                 .padding(vertical = 25.dp)
         )
 
+        ProgressBar(isLoading)
+
         PhotoGrid (
             photosList = photos,
-            onExploreClick = {  },
+            onExploreClick = onExploreClick,
             onRetryClick = { },
             onPhotoClick = {photo -> onNavigateClick(photo) },
             isBookmarkScreen = true

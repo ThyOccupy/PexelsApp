@@ -23,6 +23,9 @@ class BookmarksScreenViewModel @Inject constructor(
     private val _bookmarks = MutableStateFlow<PagingData<PhotoUiEntity>>(PagingData.empty())
     val bookmarks: StateFlow<PagingData<PhotoUiEntity>> = _bookmarks
 
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     init {
         getBookmarks()
     }
@@ -37,7 +40,9 @@ class BookmarksScreenViewModel @Inject constructor(
                 }.cachedIn(viewModelScope)
 
                 .collectLatest { transformedData ->
-                    _bookmarks.value = transformedData }
+                    _bookmarks.value = transformedData
+                    _isLoading.value = false
+                }
         }
     }
 }

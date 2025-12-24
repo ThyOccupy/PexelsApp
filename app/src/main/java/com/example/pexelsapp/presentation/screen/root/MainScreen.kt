@@ -36,11 +36,16 @@ fun MainScreen() {
                 }
             },
             bookmarkScreenContent = {
-                BookmarksScreen {photo ->
-                    val navBackStack = navigationState.navHostController.currentBackStackEntry
-                    val route = navBackStack?.destination?.route ?: throw IllegalStateException()
-                    navigationState.navigateToDetails(photo, route)
-                }
+                BookmarksScreen(
+                    onPhotoClick = {photo ->
+                        val navBackStack = navigationState.navHostController.currentBackStackEntry
+                        val route = navBackStack?.destination?.route ?: throw IllegalStateException()
+                        navigationState.navigateToDetails(photo, route)
+                    },
+                    onExploreClick = {
+                        navigationState.navigateToHome()
+                    }
+                )
             },
             detailsScreenContent = { id, route ->
                 DetailsScreen(
