@@ -1,4 +1,4 @@
-package com.example.pexelsapp.data.remote.interseptors
+package com.example.pexelsapp.data.source.interseptors
 
 
 import com.example.pexelsapp.BuildConfig

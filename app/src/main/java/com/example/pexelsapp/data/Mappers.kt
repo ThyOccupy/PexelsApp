@@ -1,7 +1,7 @@
 package com.example.pexelsapp.data
 
 import com.example.pexelsapp.data.database.entities.PexelsEntity
-import com.example.pexelsapp.data.remote.dto.PhotoDto
+import com.example.pexelsapp.data.source.dto.PhotoDto
 import com.example.pexelsapp.domain.model.PhotoModel
 
 fun PhotoDto.toEntity() : PexelsEntity = PexelsEntity(

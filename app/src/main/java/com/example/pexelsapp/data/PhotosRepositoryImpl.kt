@@ -1,17 +1,16 @@
 package com.example.pexelsapp.data
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import androidx.paging.map
-import com.example.pexelsapp.data.remote.PexelsApi
-import com.example.pexelsapp.data.remote.PhotosRemoteMediator
+import com.example.pexelsapp.data.source.PexelsApi
+import com.example.pexelsapp.data.source.PhotosRemoteMediator
 import com.example.pexelsapp.domain.PhotoRepository
 import com.example.pexelsapp.domain.model.PhotoModel
 import com.example.pexelsapp.data.database.PexelsDatabase
+import com.example.pexelsapp.utils.Const
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,7 +28,7 @@ class PhotosRepositoryImpl @Inject constructor(
     override suspend fun getPhotos(query: String): Flow<PagingData<PhotoModel>> {
         return withContext(Dispatchers.IO) {
             val pager = Pager(
-                config = PagingConfig(pageSize = 20),
+                config = PagingConfig(Const.DEFAULT_CURATED_LIMIT),
                 remoteMediator = PhotosRemoteMediator(
                     query = query,
                     database = database,
@@ -68,8 +67,22 @@ class PhotosRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun switchBookmarkStatus(id: Int) {
-            database.pexelsDao.toggleBookmarkStatus(id)
+    override suspend fun switchBookmarkStatus(id: Int, isBookmarked: Boolean) {
+        database.pexelsDao.switchBookmarkStatus(id, isBookmarked)
+    }
 
+    override suspend fun getBookmarks(): Flow<PagingData<PhotoModel>> {
+        return withContext(Dispatchers.IO) {
+            val pager = Pager (
+                config = PagingConfig(Const.DEFAULT_CURATED_LIMIT),
+                pagingSourceFactory = {
+                    database.pexelsDao.getBookmarked()
+                }
+            )
+
+            pager.flow.map { pagingData ->
+                pagingData.map { it.toModel() }
+            }
+        }
     }
 }

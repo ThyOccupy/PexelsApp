@@ -19,6 +19,6 @@ class MainActivity : ComponentActivity() {
                 installSplashScreen()
                 MainScreen()
             }
-            }
         }
     }
+}

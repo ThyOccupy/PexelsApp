@@ -28,8 +28,6 @@ import com.example.pexelsapp.presentation.screen.root.NavigationItem.*
 fun NavigationBar(
     navigationState: NavigationState
 ) {
-    /*This state stores current open screen.
-        If the screen changes, its state will also change and a recomposition comp funs will occur.*/
 
     val navBackStackEntry = navigationState.navHostController.currentBackStackEntryAsState()
 

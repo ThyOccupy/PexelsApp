@@ -1,4 +1,4 @@
-package com.example.pexelsapp.data.remote
+package com.example.pexelsapp.data.source
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType

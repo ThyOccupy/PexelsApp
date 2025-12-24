@@ -7,7 +7,7 @@ import javax.inject.Inject
 class SwitchBookmarkStatusUseCaseImpl @Inject constructor(
     private val repository: PhotoRepository
 ): SwitchBookmarkStatusUseCase {
-    override suspend fun execute(id: Int) {
-        repository.switchBookmarkStatus(id)
+    override suspend fun execute(id: Int, isBookmarked: Boolean) {
+        repository.switchBookmarkStatus(id, isBookmarked)
     }
 }

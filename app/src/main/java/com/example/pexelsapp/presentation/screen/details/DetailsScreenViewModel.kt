@@ -79,7 +79,8 @@ class DetailsScreenViewModel @Inject constructor(
     }
     private fun switchBookmarkStatus(photo: PhotoUiEntity) {
         viewModelScope.launch {
-            switchBookmarkStatusUseCase.execute(photo.id)
+            val isBookmarked = !photo.isBookmarked
+            switchBookmarkStatusUseCase.execute(photo.id, isBookmarked)
         }
     }
 }
