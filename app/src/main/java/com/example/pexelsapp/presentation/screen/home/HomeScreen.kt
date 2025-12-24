@@ -15,10 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.pexelsapp.R
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.common.components.toolbar.Headers
 import com.example.pexelsapp.presentation.common.components.photo.PhotoGrid
@@ -67,6 +69,7 @@ fun HomeScreen(
 
         PhotoGrid(
             photosList = photos,
+            errorMessage = stringResource(R.string.no_results_found),
             onPhotoClick = {onPhotoClick(it)},
             onExploreClick = {
                 viewModel.onEvent(HomeScreenEvent.OnExploreClicked)
