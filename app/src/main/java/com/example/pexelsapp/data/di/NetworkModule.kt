@@ -1,6 +1,6 @@
 package com.example.pexelsapp.data.di
 
-import com.example.pexelsapp.Const
+import com.example.pexelsapp.utils.Const
 import com.example.pexelsapp.data.remote.PexelsApi
 import com.example.pexelsapp.data.remote.interseptors.HeaderInterceptor
 import com.example.pexelsapp.data.remote.interseptors.cacheInterceptor
