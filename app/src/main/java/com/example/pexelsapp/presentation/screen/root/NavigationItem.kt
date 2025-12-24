@@ -1,9 +1,10 @@
-package com.example.pexelsapp.presentation.common.navigation
+package com.example.pexelsapp.presentation.screen.root
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import com.example.pexelsapp.R
+import com.example.pexelsapp.presentation.common.navigation.Screen
 
 sealed class NavigationItem(
     val screen: Screen,

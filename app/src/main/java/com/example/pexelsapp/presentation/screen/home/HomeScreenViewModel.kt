@@ -1,4 +1,4 @@
-package com.example.pexelsapp.presentation.screen.root
+package com.example.pexelsapp.presentation.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,21 +7,22 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.pexelsapp.domain.usecase.interfaces.GetHeaderUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotosUseCase
+import com.example.pexelsapp.presentation.events.HomeScreenEvent
 import com.example.pexelsapp.presentation.model.HeaderUiEntity
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
-import com.example.pexelsapp.presentation.events.HomeScreenEvent
 import com.example.pexelsapp.presentation.model.toHeaderUiEntity
 import com.example.pexelsapp.presentation.model.toUiEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class HomeScreenViewModel @Inject constructor(
     private val getPhotosUseCase: GetPhotosUseCase,
     private val getHeaderUseCase: GetHeaderUseCase
 ) : ViewModel() {
@@ -43,7 +44,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun onEvent(event: HomeScreenEvent) {
-        when(event){
+        when (event) {
             is HomeScreenEvent.OnSearchQueryChange -> setQuery(event.query)
             is HomeScreenEvent.OnExploreClicked -> initialPhotos()
             is HomeScreenEvent.onRetryClicked -> initialPhotos()
@@ -56,26 +57,26 @@ class MainViewModel @Inject constructor(
 
     private fun initialPhotos() {
         viewModelScope.launch {
-            query.collectLatest { queryValue ->
+            query.flatMapLatest { queryValue ->
                 getPhotosUseCase.execute(queryValue)
                     .map { pagingData ->
                         pagingData.map { photoModel ->
                             photoModel.toUiEntity()
                         }
                     }.cachedIn(viewModelScope)
+            }
                     .collectLatest { transformedPagingData ->
                         _photos.value = transformedPagingData
                     }
             }
         }
-    }
 
-    private fun initialTitles() {
-        viewModelScope.launch {
-            val headers = getHeaderUseCase.execute().map {
-                it.toHeaderUiEntity()
-            }
-            _titles.value = headers
+private fun initialTitles() {
+    viewModelScope.launch {
+        val headers = getHeaderUseCase.execute().map {
+            it.toHeaderUiEntity()
         }
+        _titles.value = headers
     }
+}
 }
