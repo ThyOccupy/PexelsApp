@@ -27,7 +27,7 @@ interface PexelsApi {
         @Query("per_page") pageSize: Int = FEATURED_NUMBER
     ): QueryCollectionsDto
 
-    companion object {
+    private companion object {
         private const val QUERY_PARAM_QUERY = "query"
         private const val QUERY_PARAM_PAGE = "page"
         private const val QUERY_PARAM_PER_PAGE = "per_page"

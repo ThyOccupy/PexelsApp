@@ -50,8 +50,9 @@ fun ImagesGrid(
         ) {
             items(photosList.itemCount) { index ->
                 photosList[index]?.let { photo ->
-                    PhotoCard(photo = photo) {}
-                    onPhotoClick(photo)
+                    PhotoCard(photo = photo) {
+                        onPhotoClick(it)
+                    }
                 }
             }
         }
@@ -66,7 +67,7 @@ fun ImagesGrid(
 @Composable
 fun PhotoCard(
     photo: PhotoUiEntity,
-    onclick: () -> Unit
+    onPhotoClick: (PhotoUiEntity) -> Unit
 ) {
     val ratio = countSize(photo.width, photo.height)
 
@@ -74,7 +75,7 @@ fun PhotoCard(
         modifier = Modifier
             .aspectRatio(ratio)
             .fillMaxWidth()
-            .clickable { onclick() }
+            .clickable { onPhotoClick(photo) }
             .padding(12.dp)
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,

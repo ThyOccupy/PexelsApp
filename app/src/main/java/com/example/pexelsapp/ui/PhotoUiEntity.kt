@@ -1,8 +1,10 @@
 package com.example.pexelsapp.ui
 
 import com.example.pexelsapp.domain.model.PhotoModel
+import kotlin.Int
 
 data class PhotoUiEntity (
+    val id: Int,
     val url: String,
     val width: Int,
     val height: Int,
@@ -10,6 +12,7 @@ data class PhotoUiEntity (
 )
 
 fun PhotoModel.toUiEntity(): PhotoUiEntity = PhotoUiEntity(
+    id = id,
     url = urlOrig,
     width = width,
     height = height,

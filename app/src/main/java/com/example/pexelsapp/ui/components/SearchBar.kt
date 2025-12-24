@@ -11,11 +11,9 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,8 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pexelsapp.R
 import com.example.pexelsapp.ui.theme.PexelsAppTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +31,7 @@ fun SearchBar(
     onQueryChange: (String) -> Unit
 ) {
     var isActive by remember { mutableStateOf(false) }
-    val debounce = 500L
+/*    val debounce = 500L
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(query) {
@@ -45,7 +41,7 @@ fun SearchBar(
                 onQueryChange(query)
             }
         }
-    }
+    }*/
 
     SearchBar(
         inputField = {

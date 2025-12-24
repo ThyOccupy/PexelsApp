@@ -1,7 +1,7 @@
 package com.example.pexelsapp.domain.model
 
 data class PhotoModel(
-    val id: Long,
+    val id: Int,
     val urlOrig: String,
     val urlComp: String,
     val width: Int,

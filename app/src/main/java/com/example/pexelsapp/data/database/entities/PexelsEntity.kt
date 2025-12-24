@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class PexelsEntity(
-    @PrimaryKey val id: Long,
+    @PrimaryKey val id: Int,
     val urlOrig: String,
     val urlComp: String,
     val width: Int,

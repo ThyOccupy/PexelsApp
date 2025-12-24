@@ -20,6 +20,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.MainViewModel
+import com.example.pexelsapp.ui.PhotoUiEntity
 import com.example.pexelsapp.ui.components.Headers
 import com.example.pexelsapp.ui.components.ImagesGrid
 import com.example.pexelsapp.ui.components.ProgressBar
@@ -27,7 +28,10 @@ import com.example.pexelsapp.ui.components.SearchBar
 import com.example.pexelsapp.ui.events.HomeScreenEvent
 
 @Composable
-fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
+fun HomeScreen(
+    viewModel: MainViewModel = hiltViewModel(),
+               onPhotoClick: (PhotoUiEntity) -> Unit
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,7 +68,7 @@ fun HomeScreen(viewModel: MainViewModel = hiltViewModel()){
 
         ImagesGrid(
             photosList = photos,
-            onPhotoClick = {},
+            onPhotoClick = {onPhotoClick(it)},
             onExploreClick = {
                 viewModel.onEvent(HomeScreenEvent.OnExploreClicked)
             },

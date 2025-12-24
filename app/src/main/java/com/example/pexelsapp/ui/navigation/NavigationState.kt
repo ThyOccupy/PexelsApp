@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.pexelsapp.ui.PhotoUiEntity
 
 class NavigationState(
     //This object stores navigation state
@@ -16,7 +17,9 @@ class NavigationState(
             popUpTo(navHostController.graph.findStartDestination().id)
             launchSingleTop = true
         }
-
+    }
+    fun navigateToDetails(photo: PhotoUiEntity){
+        navHostController.navigate(Screen.Details.getRouteWithArgs(photo))
     }
 }
 
