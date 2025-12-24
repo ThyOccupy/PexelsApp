@@ -1,12 +1,11 @@
-package com.example.pexelsapp.data.remote
+package com.example.pexelsapp.data.source
 
 import com.example.pexelsapp.utils.Const.DEFAULT_CURATED_LIMIT
 import com.example.pexelsapp.utils.Const.DEFAULT_FEATURED_NUMBER
-import com.example.pexelsapp.data.remote.dto.GetQueryPhotosResponseBody
-import com.example.pexelsapp.data.remote.dto.PhotoDto
-import com.example.pexelsapp.data.remote.dto.QueryCollectionsDto
+import com.example.pexelsapp.data.source.dto.GetQueryPhotosResponseBody
+import com.example.pexelsapp.data.source.dto.PhotoDto
+import com.example.pexelsapp.data.source.dto.QueryCollectionsDto
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 

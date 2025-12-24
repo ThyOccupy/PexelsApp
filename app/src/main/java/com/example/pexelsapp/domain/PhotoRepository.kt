@@ -10,5 +10,7 @@ interface PhotoRepository {
     suspend fun getPhotoByIdApi(id: Int): Flow<PhotoModel>
     suspend fun getPhotoByIdDb(id: Int): Flow<PhotoModel>
 
-    suspend fun switchBookmarkStatus(id: Int)
+    suspend fun switchBookmarkStatus(id: Int, isBookmarked: Boolean )
+
+    suspend fun getBookmarks(): Flow<PagingData<PhotoModel>>
 }

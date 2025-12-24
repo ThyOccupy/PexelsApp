@@ -1,4 +1,4 @@
-package com.example.pexelsapp.data.remote.dto
+package com.example.pexelsapp.data.source.dto
 
 
 import com.squareup.moshi.Json

@@ -1,4 +1,4 @@
-package com.example.pexelsapp.data.remote.dto
+package com.example.pexelsapp.data.source.dto
 
 data class GetQueryPhotosResponseBody(
     val photos: List<PhotoDto>

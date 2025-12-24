@@ -1,6 +1,7 @@
 package com.example.pexelsapp.domain.di
 
 import com.example.pexelsapp.domain.usecase.DownloadImageUseCaseImpl
+import com.example.pexelsapp.domain.usecase.GetBookmarksUseCaseImpl
 import com.example.pexelsapp.domain.usecase.interfaces.GetHeaderUseCase
 import com.example.pexelsapp.domain.usecase.GetHeaderUseCaseImpl
 import com.example.pexelsapp.domain.usecase.GetPhotoByIdApiUseCaseImpl
@@ -9,6 +10,7 @@ import com.example.pexelsapp.domain.usecase.interfaces.GetPhotosUseCase
 import com.example.pexelsapp.domain.usecase.GetPhotosUseCaseImpl
 import com.example.pexelsapp.domain.usecase.SwitchBookmarkStatusUseCaseImpl
 import com.example.pexelsapp.domain.usecase.interfaces.DownloadImageUseCase
+import com.example.pexelsapp.domain.usecase.interfaces.GetBookmarksUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdApiUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdDbUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.SwitchBookmarkStatusUseCase
@@ -50,5 +52,10 @@ abstract class UseCaseModule {
     abstract fun bindSwitchBookmarkStatusUseCase(
         switchBookmarkStatusUseCaseImpl: SwitchBookmarkStatusUseCaseImpl
     ): SwitchBookmarkStatusUseCase
+
+    @Binds
+    abstract fun bindGetBookmarkUseCase(
+        getBookmarksUseCaseImpl: GetBookmarksUseCaseImpl
+    ): GetBookmarksUseCase
 
 }

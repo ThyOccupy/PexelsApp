@@ -39,6 +39,7 @@ fun BookmarkButton(
             )
             .clip(CircleShape)
             .clickable {
+                onBookmarkClicked()
                 isBooked = !isBooked
             }
             .padding(14.dp),

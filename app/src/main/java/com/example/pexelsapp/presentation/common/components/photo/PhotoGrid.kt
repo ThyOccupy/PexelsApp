@@ -35,6 +35,7 @@ import java.net.UnknownHostException
 @Composable
 fun PhotoGrid(
     photosList: LazyPagingItems<PhotoUiEntity>,
+    isBookmarkScreen: Boolean = false,
     onPhotoClick: (PhotoUiEntity) -> Unit,
     onExploreClick: () -> Unit,
     onRetryClick: () -> Unit
@@ -50,7 +51,8 @@ fun PhotoGrid(
                     PhotoCard(
                         modifier = Modifier
                             .padding(12.dp),
-                        photo = photo
+                        photo = photo,
+                        isBookmarkScreen = isBookmarkScreen
                     ) {
                         onPhotoClick(it)
                     }

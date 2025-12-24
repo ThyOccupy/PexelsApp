@@ -1,11 +1,11 @@
 package com.example.pexelsapp.data.di
 
 import com.example.pexelsapp.utils.Const
-import com.example.pexelsapp.data.remote.PexelsApi
-import com.example.pexelsapp.data.remote.interseptors.HeaderInterceptor
-import com.example.pexelsapp.data.remote.interseptors.cacheInterceptor
-import com.example.pexelsapp.data.remote.interseptors.loggingInterceptor
-import com.example.pexelsapp.data.remote.interseptors.retryInterceptor
+import com.example.pexelsapp.data.source.PexelsApi
+import com.example.pexelsapp.data.source.interseptors.HeaderInterceptor
+import com.example.pexelsapp.data.source.interseptors.cacheInterceptor
+import com.example.pexelsapp.data.source.interseptors.loggingInterceptor
+import com.example.pexelsapp.data.source.interseptors.retryInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
