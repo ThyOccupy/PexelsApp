@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -19,20 +21,25 @@ import com.example.pexelsapp.presentation.model.HeaderUiEntity
 @Composable
 fun Headers(
     headers: List<HeaderUiEntity>,
-    query: String,
     onHeaderClick: (HeaderUiEntity) -> Unit
 ) {
-    val modifiedHeaders = headers.map { header ->
-        header.copy(isSelected = header.name.equals(query, ignoreCase = true))
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(headers) {
+        val selectedIndex = headers.indexOfFirst { it.isSelected }
+        if (selectedIndex != -1) {
+            listState.animateScrollToItem(selectedIndex)
+        }
     }
 
     LazyRow(
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 12.dp)
+            .padding(horizontal = 24.dp, vertical = 12.dp),
+        state = listState
     ) {
-        items(modifiedHeaders.size) { index ->
+        items(headers.size) { index ->
             Header(
-                header = modifiedHeaders[index],
+                header = headers[index],
                 onClick = {header ->
                     header.isSelected !=header.isSelected
                     onHeaderClick(header)

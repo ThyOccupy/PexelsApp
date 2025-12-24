@@ -40,6 +40,9 @@ class HomeScreenViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private var originalTitles = listOf<HeaderUiEntity>()
+
+
 
     init {
         initialPhotos()
@@ -52,6 +55,31 @@ class HomeScreenViewModel @Inject constructor(
             is HomeScreenEvent.OnExploreClicked -> initialPhotos()
             is HomeScreenEvent.onRetryClicked -> initialPhotos()
         }
+    }
+    fun checkAndMoveTitle(query: String) {
+        val updatedTitles = _titles.value.map { title ->
+            if (title.name == query) {
+                title.copy(isSelected = true)
+            } else {
+                title.copy(isSelected = false)
+            }
+        }
+        _titles.value = updatedTitles
+        changeSelectedTitlePosition()
+    }
+
+    private fun changeSelectedTitlePosition() {
+        val currentTitles = _titles.value.toMutableList()
+        val selectedTitle = currentTitles.find { it.isSelected }
+
+        if (selectedTitle != null) {
+            currentTitles.remove(selectedTitle)
+            currentTitles.add(0, selectedTitle)
+        } else {
+            currentTitles.clear()
+            currentTitles.addAll(originalTitles)
+        }
+        _titles.value = currentTitles
     }
 
     private fun setQuery(newQuery: String) {
