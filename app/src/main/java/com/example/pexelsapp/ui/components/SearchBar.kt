@@ -90,8 +90,8 @@ fun SearchBar(
                 ),
             )
         },
-        expanded = isActive,
-        onExpandedChange = { isActive = it },
+        expanded = false,
+        onExpandedChange = { },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 12.dp),
