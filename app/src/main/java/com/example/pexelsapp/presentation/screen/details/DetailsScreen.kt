@@ -84,6 +84,8 @@ fun DetailsScreen(
 
                         item {
                             PhotoCard(
+                                modifier = Modifier
+                                    .padding(24.dp),
                                 photo = photoModel!!,
                             ) {
                             }
