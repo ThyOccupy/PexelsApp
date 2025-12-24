@@ -8,7 +8,8 @@ data class PhotoUiEntity (
     val url: String,
     val width: Int,
     val height: Int,
-    val photographer: String
+    val photographer: String,
+    val isBookmarked: Boolean
 )
 
 fun PhotoModel.toUiEntity(): PhotoUiEntity = PhotoUiEntity(
@@ -16,5 +17,6 @@ fun PhotoModel.toUiEntity(): PhotoUiEntity = PhotoUiEntity(
     url = urlOrig,
     width = width,
     height = height,
-    photographer = photographer
+    photographer = photographer,
+    isBookmarked = isBookmarked
 )

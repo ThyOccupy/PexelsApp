@@ -1,6 +1,7 @@
 package com.example.pexelsapp.domain.usecase
 
 import com.example.pexelsapp.domain.PhotoRepository
+import com.example.pexelsapp.domain.usecase.interfaces.GetHeaderUseCase
 import javax.inject.Inject
 
 class GetHeaderUseCaseImpl @Inject constructor(

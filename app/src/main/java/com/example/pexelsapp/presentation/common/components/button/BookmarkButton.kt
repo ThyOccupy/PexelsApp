@@ -22,13 +22,14 @@ import com.example.pexelsapp.R
 
 @Composable
 fun BookmarkButton(
+    isBookmarked: Boolean,
     onClick: () -> Unit
 ) {
-    var isBookmarked by remember {
-        mutableStateOf(false)
+    var isBooked by remember {
+        mutableStateOf(isBookmarked)
     }
 
-    val icon = if (isBookmarked) painterResource(R.drawable.ic_bookmark_active)
+    val icon = if (isBooked) painterResource(R.drawable.ic_bookmark_active)
     else painterResource(R.drawable.ic_bookmark_inactive)
     Box(
         modifier = Modifier
@@ -39,7 +40,7 @@ fun BookmarkButton(
             )
             .clip(CircleShape)
             .clickable {
-                isBookmarked = !isBookmarked
+                isBooked = !isBooked
             }
             .padding(14.dp),
         contentAlignment = Alignment.Center
@@ -47,7 +48,7 @@ fun BookmarkButton(
         Icon(
             painter = icon,
             contentDescription = null,
-            tint = if (!isBookmarked) {
+            tint = if (!isBooked) {
                 MaterialTheme.colorScheme.onBackground
             } else MaterialTheme.colorScheme.primary
         )

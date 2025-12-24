@@ -18,8 +18,8 @@ class NavigationState(
             launchSingleTop = true
         }
     }
-    fun navigateToDetails(photo: PhotoUiEntity) {
-        navHostController.navigate(Screen.Details.getRouteWithArgs(photo))
+    fun navigateToDetails(photo: PhotoUiEntity, route: String) {
+        navHostController.navigate(Screen.Details.getRouteWithArgs(photo, route))
     }
     fun goBack() {
         navHostController.popBackStack()
