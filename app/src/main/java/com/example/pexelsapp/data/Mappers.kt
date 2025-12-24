@@ -5,7 +5,7 @@ import com.example.pexelsapp.data.remote.dto.PhotoDto
 import com.example.pexelsapp.domain.model.PhotoModel
 
 fun PhotoDto.toEntity() : PexelsEntity = PexelsEntity(
-        id = id.toLong(),
+        id = id,
         width = width,
         height = height,
         photographer = photographer,

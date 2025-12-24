@@ -5,28 +5,32 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
+import com.example.pexelsapp.ui.PhotoUiEntity
 
 @Composable
 fun NavGraph(
     navHostController: NavHostController,
-    homeScreenContent: @Composable () -> Unit,
+    imagesHeadersScreenContent: @Composable () -> Unit,
     bookmarkScreenContent: @Composable () -> Unit,
+    detailsScreenContent: @Composable (photoId: Int) -> Unit,
     modifier: Modifier = Modifier
     ) {
 
     //Store app navGraph
     NavHost(
         navController = navHostController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.NestedHome.route
     ){
-        //Add new destination in navGraph
+        homeScreenNavGraph(
+            imagesHeadersScreenContent = imagesHeadersScreenContent,
+            detailsScreenContent = detailsScreenContent
+        )
         composable( Screen.Home.route ){
-            //Use composable callback to avoid injecting viewModel and paddingValues and so on
-            homeScreenContent()
+            imagesHeadersScreenContent()
         }
 
         composable( Screen.Bookmark.route ){
-            //Use composable callback to avoid injecting viewModel and paddingValues and so on
             bookmarkScreenContent()
         }
     }

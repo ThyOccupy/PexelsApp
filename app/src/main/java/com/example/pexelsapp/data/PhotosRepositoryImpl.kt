@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.pexelsapp.data.remote.PexelsApi
 import com.example.pexelsapp.data.remote.PhotosRemoteMediator

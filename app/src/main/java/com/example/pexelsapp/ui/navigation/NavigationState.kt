@@ -2,8 +2,10 @@ package com.example.pexelsapp.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.pexelsapp.ui.PhotoUiEntity
 
 class NavigationState(
     //This object stores navigation state
@@ -12,18 +14,12 @@ class NavigationState(
 
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
-            //remove storing the NavigationBar history in the backstack, except for the HomeScreen
-            popUpTo(navHostController.graph.startDestinationId) {
-                //when removing screens from the backStack, save their state
-                saveState = true
-            }
-            //prevent multiple saving of the same function to the backstack
-            //or Only one copy of each screen is on top of the backStack
+            popUpTo(navHostController.graph.findStartDestination().id)
             launchSingleTop = true
-            //during navigation, when switching to a screen, restore the state
-            restoreState = true
         }
-
+    }
+    fun navigateToDetails(photo: PhotoUiEntity){
+        navHostController.navigate(Screen.Details.getRouteWithArgs(photo))
     }
 }
 

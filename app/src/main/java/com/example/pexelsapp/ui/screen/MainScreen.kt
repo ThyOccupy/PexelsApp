@@ -27,8 +27,11 @@ fun MainScreen() {
 
         NavGraph(
             navHostController = navigationState.navHostController,
-            homeScreenContent = { HomeScreen() },
+            imagesHeadersScreenContent = { HomeScreen{photo ->
+                navigationState.navigateToDetails(photo)
+            } },
             bookmarkScreenContent = { Text(text = "BookmarkScreen", color = Color.Black) },
+            detailsScreenContent = { Text(text = "DetailsScreen id: $it", color = Color.Black) },
             modifier = Modifier.padding(paddingValues)
         )
     }
