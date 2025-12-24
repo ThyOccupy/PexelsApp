@@ -18,11 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pexelsapp.R
 import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
-import com.example.pexelsapp.presentation.theme.PexelsAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,7 +73,7 @@ fun SearchBar(
                         ) {
                             Icon(
                                 painter = PexelsIcons.Cansel,
-                                contentDescription = "Clear search",
+                                contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
@@ -95,33 +93,5 @@ fun SearchBar(
             containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
             dividerColor = Color.LightGray
         )
-    ) {
-
-        // todo SearchResultsContent()
-
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun LightPreviewSearchBar() {
-    PexelsAppTheme(dynamicColor = false) {
-        SearchBar(
-            "", {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DarkPreviewSearchBar() {
-    PexelsAppTheme(
-        dynamicColor = false,
-        darkTheme = true
-    ) {
-        SearchBar(
-            "", {}
-        )
-    }
+    ) {}
 }
