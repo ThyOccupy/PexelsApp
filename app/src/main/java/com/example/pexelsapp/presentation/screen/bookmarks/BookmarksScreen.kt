@@ -12,12 +12,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.pexelsapp.R
 import com.example.pexelsapp.presentation.common.components.photo.PhotoGrid
 import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
@@ -69,6 +71,7 @@ fun BookmarksScreenLayout(
 
         PhotoGrid (
             photosList = photos,
+            errorMessage = stringResource(R.string.no_bookmark_found),
             onExploreClick = onExploreClick,
             onRetryClick = { },
             onPhotoClick = {photo -> onNavigateClick(photo) },

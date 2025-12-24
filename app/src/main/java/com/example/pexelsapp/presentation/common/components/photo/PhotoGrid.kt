@@ -35,6 +35,7 @@ import java.net.UnknownHostException
 @Composable
 fun PhotoGrid(
     photosList: LazyPagingItems<PhotoUiEntity>,
+    errorMessage: String,
     isBookmarkScreen: Boolean = false,
     onPhotoClick: (PhotoUiEntity) -> Unit,
     onExploreClick: () -> Unit,
@@ -61,6 +62,7 @@ fun PhotoGrid(
         }
         NoResultsStub(
             photosList = photosList,
+            errorMessage = errorMessage,
             onExploreClick = onExploreClick,
             onRetryClick = onRetryClick
         )
@@ -71,6 +73,7 @@ fun PhotoGrid(
 @Composable
 fun NoResultsStub(
     photosList: LazyPagingItems<PhotoUiEntity>,
+    errorMessage: String,
     onExploreClick: () -> Unit,
     onRetryClick: () -> Unit
 ) {
@@ -113,7 +116,7 @@ fun NoResultsStub(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = stringResource(R.string.no_results_found))
+                Text(text = errorMessage)
                 Spacer(Modifier.height(12.dp))
                 StubButton(text = stringResource(R.string.explore), onClick = onExploreClick)
             }
