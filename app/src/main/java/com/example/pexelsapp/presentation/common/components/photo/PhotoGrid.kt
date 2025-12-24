@@ -55,7 +55,10 @@ fun PhotoGrid(
         ) {
             items(photosList.itemCount) { index ->
                 photosList[index]?.let { photo ->
-                    PhotoCard(photo = photo) {
+                    PhotoCard(
+                        modifier = Modifier
+                            .padding(12.dp),
+                        photo = photo) {
                         onPhotoClick(it)
                     }
                 }

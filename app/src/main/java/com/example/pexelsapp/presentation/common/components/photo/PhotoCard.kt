@@ -21,16 +21,16 @@ import com.example.pexelsapp.presentation.model.PhotoUiEntity
 @Composable
 fun PhotoCard(
     photo: PhotoUiEntity,
+    modifier: Modifier,
     onPhotoClick: (PhotoUiEntity) -> Unit
 ) {
     val ratio = countSize(photo.width, photo.height)
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(ratio)
             .fillMaxWidth()
             .clickable { onPhotoClick(photo) }
-            .padding(12.dp)
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(20.dp)
