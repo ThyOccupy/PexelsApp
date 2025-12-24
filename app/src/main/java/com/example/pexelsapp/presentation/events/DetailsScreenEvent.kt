@@ -6,4 +6,5 @@ sealed class DetailsScreenEvent {
     data class InitPhotoApi(val photoId: Int) : DetailsScreenEvent()
     data class InitPhotoDb(val photoId: Int) : DetailsScreenEvent()
     data class OnDownloadClicked(val photo: PhotoUiEntity): DetailsScreenEvent()
+    data class OnBookmarkClicked(val photo: PhotoUiEntity): DetailsScreenEvent()
 }

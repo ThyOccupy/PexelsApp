@@ -9,4 +9,6 @@ interface PhotoRepository {
     suspend fun getFeatureCollections(): List<String>
     suspend fun getPhotoByIdApi(id: Int): Flow<PhotoModel>
     suspend fun getPhotoByIdDb(id: Int): Flow<PhotoModel>
+
+    suspend fun switchBookmarkStatus(id: Int)
 }

@@ -22,7 +22,7 @@ import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 @Composable
 fun BookmarkButton(
     isBookmarked: Boolean,
-    onClick: () -> Unit
+    onBookmarkClicked: () -> Unit
 ) {
     var isBooked by remember {
         mutableStateOf(isBookmarked)

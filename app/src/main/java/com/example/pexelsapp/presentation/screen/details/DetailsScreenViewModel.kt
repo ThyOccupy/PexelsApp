@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.pexelsapp.domain.usecase.interfaces.DownloadImageUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdApiUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdDbUseCase
+import com.example.pexelsapp.domain.usecase.interfaces.SwitchBookmarkStatusUseCase
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
 import com.example.pexelsapp.presentation.model.toUiEntity
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class DetailsScreenViewModel @Inject constructor(
     private val getPhotoByIdApi: GetPhotoByIdApiUseCase,
     private val getPhotoByIdDb: GetPhotoByIdDbUseCase,
-    private val downloadImageUseCase: DownloadImageUseCase
+    private val downloadImageUseCase: DownloadImageUseCase,
+    private val switchBookmarkStatusUseCase: SwitchBookmarkStatusUseCase
 ) : ViewModel() {
 
     private val _photoModel = MutableStateFlow<PhotoUiEntity?>(null)
@@ -65,11 +67,19 @@ class DetailsScreenViewModel @Inject constructor(
             is DetailsScreenEvent.OnDownloadClicked -> {
                 downloadPhoto(event.photo)
             }
+            is DetailsScreenEvent.OnBookmarkClicked -> {
+                switchBookmarkStatus(event.photo)
+            }
         }
     }
     private fun downloadPhoto(photo: PhotoUiEntity) {
         viewModelScope.launch {
             downloadImageUseCase.execute(photo.url, photo.id)
+        }
+    }
+    private fun switchBookmarkStatus(photo: PhotoUiEntity) {
+        viewModelScope.launch {
+            switchBookmarkStatusUseCase.execute(photo.id)
         }
     }
 }
