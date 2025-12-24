@@ -8,9 +8,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.pexelsapp.presentation.common.navigation.NavigationBar
-import com.example.pexelsapp.presentation.common.navigation.NavGraph
-import com.example.pexelsapp.presentation.common.navigation.rememberNavigationState
+import com.example.pexelsapp.presentation.navigation.NavigationBar
+import com.example.pexelsapp.presentation.navigation.NavGraph
+import com.example.pexelsapp.presentation.navigation.rememberNavigationState
 import com.example.pexelsapp.presentation.screen.bookmarks.BookmarksScreen
 import com.example.pexelsapp.presentation.screen.home.HomeScreen
 

@@ -1,4 +1,4 @@
-package com.example.pexelsapp.presentation.common.navigation
+package com.example.pexelsapp.presentation.navigation
 
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 

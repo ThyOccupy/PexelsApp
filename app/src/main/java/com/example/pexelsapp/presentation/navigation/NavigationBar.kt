@@ -1,4 +1,4 @@
-package com.example.pexelsapp.presentation.common.navigation
+package com.example.pexelsapp.presentation.navigation
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween

@@ -3,7 +3,7 @@ package com.example.pexelsapp.presentation.screen.root
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
-import com.example.pexelsapp.presentation.common.navigation.Screen
+import com.example.pexelsapp.presentation.navigation.Screen
 
 sealed class NavigationItem(
     val screen: Screen,

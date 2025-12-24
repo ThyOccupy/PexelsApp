@@ -31,7 +31,7 @@ import com.example.pexelsapp.presentation.common.components.button.BookmarkButto
 import com.example.pexelsapp.presentation.common.components.button.DownloadButton
 import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
 import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
-import com.example.pexelsapp.presentation.common.navigation.Screen
+import com.example.pexelsapp.presentation.navigation.Screen
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.screen.details.DetailsScreenViewModel

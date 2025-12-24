@@ -1,10 +1,9 @@
-package com.example.pexelsapp.presentation.common.navigation
+package com.example.pexelsapp.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 
 @Composable
 fun NavGraph(
@@ -24,11 +23,11 @@ fun NavGraph(
             imagesHeadersScreenContent = imagesHeadersScreenContent,
             detailsScreenContent = detailsScreenContent
         )
-        composable( Screen.NestedHome.route ){
+        composableWithAnimation( Screen.NestedHome.route ){
             imagesHeadersScreenContent()
         }
 
-        composable( Screen.Bookmark.route ){
+        composableWithAnimation( Screen.Bookmark.route ){
             bookmarkScreenContent()
         }
     }
