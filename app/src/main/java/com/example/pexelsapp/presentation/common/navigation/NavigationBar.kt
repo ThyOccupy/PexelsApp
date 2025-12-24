@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.pexelsapp.presentation.common.navigation.NavigationItem.*
+import com.example.pexelsapp.presentation.screen.root.NavigationItem.*
 
 @Composable
 fun NavigationBar(

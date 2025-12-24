@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,12 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.R
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.common.components.photo.PhotoCard
 import com.example.pexelsapp.presentation.common.components.button.BackButton
 import com.example.pexelsapp.presentation.common.components.button.BookmarkButton
 import com.example.pexelsapp.presentation.common.components.button.DownloadButton
+import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
 import com.example.pexelsapp.presentation.common.navigation.Screen
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
 import com.example.pexelsapp.presentation.screen.details.DetailsScreenViewModel
@@ -38,63 +42,67 @@ fun DetailsScreen(
     viewModel: DetailsScreenViewModel = hiltViewModel(),
         onBackPressed: () -> Unit
 ) {
+    LaunchedEffect(photoId, route) {
+        when (route) {
+            Screen.NestedHome.route -> {
+                val initialEvent = DetailsScreenEvent.InitPhotoApi(photoId)
+                viewModel.onEvent(initialEvent)
+            }
 
-    when(route){
-        Screen.NestedHome.route -> {
-            val initialEvent = DetailsScreenEvent.InitPhotoApi(photoId)
-            viewModel.onEvent(initialEvent)
-        }
-        Screen.Bookmark.route -> {
-            val initialEvent = DetailsScreenEvent.InitPhotoDb(photoId)
-            viewModel.onEvent(initialEvent)
+            Screen.Bookmark.route -> {
+                val initialEvent = DetailsScreenEvent.InitPhotoDb(photoId)
+                viewModel.onEvent(initialEvent)
+            }
         }
     }
 
-    val photoModel = viewModel.photoModel.collectAsState().value
-    photoModel?.let{
-        DetailsScreenLayout(
-            photoModel = photoModel,
-            onBackPressed = onBackPressed
-        )
-    }
-}
+    val photoModel by viewModel.photoModel.collectAsState()
+    val isLoadingData by viewModel.isLoading.collectAsState()
 
-@Composable
-fun DetailsScreenLayout(
-    photoModel: PhotoUiEntity,
-    onBackPressed: () -> Unit
-) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .systemBarsPadding()
             .background(MaterialTheme.colorScheme.background),
 
-    ) {
+        ) {
         TopDetailsBar(
-            photographerName = photoModel.photographer,
+            photographerName = photoModel?.photographer ?: "",
             onBackPressed = onBackPressed
         )
-        LazyColumn(
+        Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            item {
-                PhotoCard(
-                    photo = photoModel,
-                ) {
+            when {
+                isLoadingData -> {
+                    Stub()
                 }
-            }
-            item {
-                DetailedBar(isBookmarked = photoModel.isBookmarked)
+
+                photoModel != null -> {
+
+                    LazyColumn {
+
+                        item {
+                            PhotoCard(
+                                photo = photoModel!!,
+                            ) {
+                            }
+                        }
+                        item {
+                            DetailedBar(isBookmarked = photoModel!!.isBookmarked)
+                        }
+                    }
+                }
             }
         }
     }
-
 }
 
 @Composable
 fun Stub() {
-Text("Stub is opened")
+    ProgressBar(
+        isLoading = true
+    )
 }
 
 

@@ -30,9 +30,3 @@ fun ProgressBar(
         )
     }
 }
-
-@Preview
-@Composable
-fun PreviewProgressBar(){
-    ProgressBar(true)
-}

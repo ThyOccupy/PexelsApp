@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.pexelsapp.presentation.screen.root.MainViewModel
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.common.components.toolbar.Headers
 import com.example.pexelsapp.presentation.common.components.photo.PhotoGrid
@@ -29,8 +28,8 @@ import com.example.pexelsapp.presentation.events.HomeScreenEvent
 
 @Composable
 fun HomeScreen(
-    viewModel: MainViewModel = hiltViewModel(),
-               onPhotoClick: (PhotoUiEntity) -> Unit
+    viewModel: HomeScreenViewModel = hiltViewModel(),
+    onPhotoClick: (PhotoUiEntity) -> Unit
 ){
     Column(
         modifier = Modifier

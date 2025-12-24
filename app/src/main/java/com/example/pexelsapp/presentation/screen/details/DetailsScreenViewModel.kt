@@ -22,20 +22,31 @@ class DetailsScreenViewModel @Inject constructor(
     private val _photoModel = MutableStateFlow<PhotoUiEntity?>(null)
     val photoModel: StateFlow<PhotoUiEntity?> = _photoModel
 
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
 
 
     fun initDataDb(id: Int) {
         viewModelScope.launch {
+            _isLoading.value = true
+            _photoModel.value = null
+
             getPhotoByIdDb.execute(id).collect { data ->
                 _photoModel.value = data.toUiEntity()
+                _isLoading.value = false
             }
         }
     }
 
     fun initDataApi(id: Int) {
         viewModelScope.launch {
+            _isLoading.value = true
+            _photoModel.value = null
+
             getPhotoByIdApi.execute(id).collect { data ->
                 _photoModel.value = data.toUiEntity()
+                _isLoading.value = false
             }
         }
     }
