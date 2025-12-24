@@ -56,10 +56,10 @@ fun HomeScreen(
             }
         )
         Headers(
-            headers = headers,
-            query = query
+            headers = headers
         ){ header ->
             query = header.name
+            viewModel.checkAndMoveTitle(query)
             viewModel.onEvent(HomeScreenEvent.OnSearchQueryChange(query))
         }
         ProgressBar(

@@ -17,6 +17,7 @@
     <string name="error_connect">Не удается подключиться к серверу. Возможно, сервер временно недоступен. Повторите попытку позже</string>
     <string name="error_timeout">Сервер слишком долго не отвечает. Проверьте подключение к интернету и попробуйте снова</string>
     <string name="download">Скачать</string>
+    <string name="bookmarks">Избранные</string>
     <string name="back">Назад</string>
     <string name="failed_to_retrieve_data_error">Не удалось получить данные. Ошибка: %1$s</string>
     <string name="unexpected_error">Неожиданная ошибка: %1$s</string>

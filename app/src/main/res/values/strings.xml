@@ -16,6 +16,7 @@
     <string name="error_connect">Unable to connect to the server. The server may be temporarily unavailable. Try again later</string>
     <string name="error_timeout">The server has been unresponsive for too long. Please check your internet connection and try again</string>
     <string name="download">Download</string>
+    <string name="bookmarks">Bookmarks</string>
     <string name="back">Back</string>
     <string name="failed_to_retrieve_data_error">Failed to retrieve data. Error: %1$s</string>
     <string name="unexpected_error">Unexpected Error: %1$s</string>

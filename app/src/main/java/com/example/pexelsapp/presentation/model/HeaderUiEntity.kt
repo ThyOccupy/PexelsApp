@@ -1,7 +1,7 @@
 package com.example.pexelsapp.presentation.model
 
 data class HeaderUiEntity(
-    val name: String,
+    var name: String,
     val isSelected: Boolean
 )
 

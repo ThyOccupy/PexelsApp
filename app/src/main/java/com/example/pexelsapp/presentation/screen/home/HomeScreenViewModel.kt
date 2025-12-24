@@ -37,6 +37,12 @@ class HomeScreenViewModel @Inject constructor(
     private val _titles = MutableStateFlow<List<HeaderUiEntity>>(emptyList())
     val titles: StateFlow<List<HeaderUiEntity>> get() = _titles
 
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private var originalTitles = listOf<HeaderUiEntity>()
+
+
 
     init {
         initialPhotos()
@@ -49,6 +55,31 @@ class HomeScreenViewModel @Inject constructor(
             is HomeScreenEvent.OnExploreClicked -> initialPhotos()
             is HomeScreenEvent.onRetryClicked -> initialPhotos()
         }
+    }
+    fun checkAndMoveTitle(query: String) {
+        val updatedTitles = _titles.value.map { title ->
+            if (title.name == query) {
+                title.copy(isSelected = true)
+            } else {
+                title.copy(isSelected = false)
+            }
+        }
+        _titles.value = updatedTitles
+        changeSelectedTitlePosition()
+    }
+
+    private fun changeSelectedTitlePosition() {
+        val currentTitles = _titles.value.toMutableList()
+        val selectedTitle = currentTitles.find { it.isSelected }
+
+        if (selectedTitle != null) {
+            currentTitles.remove(selectedTitle)
+            currentTitles.add(0, selectedTitle)
+        } else {
+            currentTitles.clear()
+            currentTitles.addAll(originalTitles)
+        }
+        _titles.value = currentTitles
     }
 
     private fun setQuery(newQuery: String) {
@@ -65,18 +96,23 @@ class HomeScreenViewModel @Inject constructor(
                         }
                     }.cachedIn(viewModelScope)
             }
-                    .collectLatest { transformedPagingData ->
-                        _photos.value = transformedPagingData
-                    }
-            }
+                .collectLatest { transformedPagingData ->
+                    _photos.value = transformedPagingData
+                }
         }
-
-private fun initialTitles() {
-    viewModelScope.launch {
-        val headers = getHeaderUseCase.execute().map {
-            it.toHeaderUiEntity()
-        }
-        _titles.value = headers
+        updateIsLoading()
     }
-}
+
+    private fun initialTitles() {
+        viewModelScope.launch {
+            val headers = getHeaderUseCase.execute().map {
+                it.toHeaderUiEntity()
+            }
+            _titles.value = headers
+        }
+    }
+
+    private fun updateIsLoading() {
+        _isLoading.value = false
+    }
 }
