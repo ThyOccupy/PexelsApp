@@ -2,6 +2,7 @@ package com.example.pexelsapp.presentation.screen.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pexelsapp.domain.usecase.interfaces.DownloadImageUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdApiUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdDbUseCase
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class DetailsScreenViewModel @Inject constructor(
     private val getPhotoByIdApi: GetPhotoByIdApiUseCase,
     private val getPhotoByIdDb: GetPhotoByIdDbUseCase,
+    private val downloadImageUseCase: DownloadImageUseCase
 ) : ViewModel() {
 
     private val _photoModel = MutableStateFlow<PhotoUiEntity?>(null)
@@ -60,6 +62,14 @@ class DetailsScreenViewModel @Inject constructor(
             is DetailsScreenEvent.InitPhotoDb -> {
                 initDataDb(event.photoId)
             }
+            is DetailsScreenEvent.OnDownloadClicked -> {
+                downloadPhoto(event.photo)
+            }
+        }
+    }
+    private fun downloadPhoto(photo: PhotoUiEntity) {
+        viewModelScope.launch {
+            downloadImageUseCase.execute(photo.url, photo.id)
         }
     }
 }

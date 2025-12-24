@@ -30,6 +30,7 @@ import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
 import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 import com.example.pexelsapp.presentation.common.navigation.Screen
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
+import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.screen.details.DetailsScreenViewModel
 
 @Composable
@@ -37,7 +38,7 @@ fun DetailsScreen(
     photoId: Int,
     route: String,
     viewModel: DetailsScreenViewModel = hiltViewModel(),
-        onBackPressed: () -> Unit
+    onBackPressed: () -> Unit
 ) {
     LaunchedEffect(photoId, route) {
         when (route) {
@@ -56,61 +57,77 @@ fun DetailsScreen(
     val photoModel by viewModel.photoModel.collectAsState()
     val isLoadingData by viewModel.isLoading.collectAsState()
 
+    if (photoModel != null) {
+        DetailsScreenLayout(
+            isLoadingData = isLoadingData,
+            photoModel = photoModel!!,
+            onBackPressed = onBackPressed,
+            onDownloadClicked = {
+                viewModel.onEvent(DetailsScreenEvent.OnDownloadClicked(it))
+            }
+        )
+    } else {
+        Stub(isLoadingData)
+    }
+}
+
+
+@Composable
+fun DetailsScreenLayout(
+    isLoadingData: Boolean,
+    photoModel: PhotoUiEntity,
+    onBackPressed: () -> Unit,
+    onDownloadClicked: (PhotoUiEntity) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .systemBarsPadding()
-            .background(MaterialTheme.colorScheme.background),
-
-        ) {
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         TopDetailsBar(
-            photographerName = photoModel?.photographer ?: "",
+            photographerName = photoModel.photographer,
             onBackPressed = onBackPressed
         )
-        Box(
+        ProgressBar(
+            isLoading = isLoadingData
+        )
+        LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            when {
-                isLoadingData -> {
-                    Stub()
+            item {
+                PhotoCard(
+                    modifier = Modifier
+                        .padding(24.dp),
+                    photo = photoModel,
+                ) {
                 }
-
-                photoModel != null -> {
-
-                    LazyColumn {
-
-                        item {
-                            PhotoCard(
-                                modifier = Modifier
-                                    .padding(24.dp),
-                                photo = photoModel!!,
-                            ) {
-                            }
-                        }
-                        item {
-                            DetailedBar(isBookmarked = photoModel!!.isBookmarked)
-                        }
+            }
+            item {
+                DetailedBar(
+                    isBookmarked = photoModel.isBookmarked,
+                    onDownloadClicked = {
+                        onDownloadClicked(photoModel)
                     }
-                }
+                )
             }
         }
     }
+
 }
 
 @Composable
-fun Stub() {
+fun Stub(isLoading: Boolean) {
     ProgressBar(
-        isLoading = true
+        isLoading = isLoading
     )
 }
 
 
-
-
-
 @Composable
 fun DetailedBar(
-    isBookmarked: Boolean
+    isBookmarked: Boolean,
+    onDownloadClicked: () -> Unit
 ) {
 
     Row(
@@ -122,14 +139,14 @@ fun DetailedBar(
         DownloadButton(
             title = stringResource(R.string.download),
             icon = PexelsIcons.Download,
-            onClick = {}
+            onClick = onDownloadClicked
         )
 
         Spacer(Modifier.weight(1f))
 
         BookmarkButton(
             isBookmarked = isBookmarked,
-        ){}
+        ) {}
     }
 }
 
