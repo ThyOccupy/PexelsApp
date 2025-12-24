@@ -1,12 +1,9 @@
-package com.example.pexelsapp.presentation.common.navigation
+package com.example.pexelsapp.presentation.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType.Companion.IntType
 import androidx.navigation.NavType.Companion.StringType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 
