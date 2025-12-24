@@ -2,8 +2,10 @@ package com.example.pexelsapp.presentation.screen.root
 
 import DetailsScreen
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +21,7 @@ fun MainScreen() {
     val navigationState = rememberNavigationState()
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             Box(modifier = Modifier.height(64.dp)) {
                 NavigationBar(navigationState)
@@ -58,8 +61,7 @@ fun MainScreen() {
                         navigationState.navigateTo(route)
                     }
                 )
-            },
-            modifier = Modifier.padding(paddingValues)
+            }, modifier = Modifier.padding(paddingValues)
         )
     }
 }

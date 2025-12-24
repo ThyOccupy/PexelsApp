@@ -37,6 +37,9 @@ class HomeScreenViewModel @Inject constructor(
     private val _titles = MutableStateFlow<List<HeaderUiEntity>>(emptyList())
     val titles: StateFlow<List<HeaderUiEntity>> get() = _titles
 
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
 
     init {
         initialPhotos()
@@ -65,18 +68,23 @@ class HomeScreenViewModel @Inject constructor(
                         }
                     }.cachedIn(viewModelScope)
             }
-                    .collectLatest { transformedPagingData ->
-                        _photos.value = transformedPagingData
-                    }
-            }
+                .collectLatest { transformedPagingData ->
+                    _photos.value = transformedPagingData
+                }
         }
-
-private fun initialTitles() {
-    viewModelScope.launch {
-        val headers = getHeaderUseCase.execute().map {
-            it.toHeaderUiEntity()
-        }
-        _titles.value = headers
+        updateIsLoading()
     }
-}
+
+    private fun initialTitles() {
+        viewModelScope.launch {
+            val headers = getHeaderUseCase.execute().map {
+                it.toHeaderUiEntity()
+            }
+            _titles.value = headers
+        }
+    }
+
+    private fun updateIsLoading() {
+        _isLoading.value = false
+    }
 }

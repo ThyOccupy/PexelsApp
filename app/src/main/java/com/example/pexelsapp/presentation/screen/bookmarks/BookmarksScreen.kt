@@ -60,7 +60,7 @@ fun BookmarksScreenLayout(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Bookmarks",
+            text = stringResource(R.string.bookmarks),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             modifier = Modifier
