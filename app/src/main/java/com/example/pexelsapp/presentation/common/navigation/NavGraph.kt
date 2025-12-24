@@ -24,11 +24,11 @@ fun NavGraph(
             imagesHeadersScreenContent = imagesHeadersScreenContent,
             detailsScreenContent = detailsScreenContent
         )
-        composable( Screen.NestedHome.route ){
+        composableWithAnimation( Screen.NestedHome.route ){
             imagesHeadersScreenContent()
         }
 
-        composable( Screen.Bookmark.route ){
+        composableWithAnimation( Screen.Bookmark.route ){
             bookmarkScreenContent()
         }
     }
