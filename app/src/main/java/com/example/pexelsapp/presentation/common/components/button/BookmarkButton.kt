@@ -16,9 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.pexelsapp.R
+import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 
 @Composable
 fun BookmarkButton(
@@ -29,8 +28,8 @@ fun BookmarkButton(
         mutableStateOf(isBookmarked)
     }
 
-    val icon = if (isBooked) painterResource(R.drawable.ic_bookmark_active)
-    else painterResource(R.drawable.ic_bookmark_inactive)
+    val icon = if (isBooked) PexelsIcons.BookmarkFilled
+    else PexelsIcons.BookmarkOutline
     Box(
         modifier = Modifier
             .size(48.dp)

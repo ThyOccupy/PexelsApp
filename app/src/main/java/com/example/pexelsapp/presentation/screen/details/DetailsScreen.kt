@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,20 +16,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.R
-import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.common.components.photo.PhotoCard
 import com.example.pexelsapp.presentation.common.components.button.BackButton
 import com.example.pexelsapp.presentation.common.components.button.BookmarkButton
 import com.example.pexelsapp.presentation.common.components.button.DownloadButton
 import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
+import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 import com.example.pexelsapp.presentation.common.navigation.Screen
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
 import com.example.pexelsapp.presentation.screen.details.DetailsScreenViewModel
@@ -123,8 +120,8 @@ fun DetailedBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         DownloadButton(
-title = stringResource(R.string.download),
-            icon = painterResource(R.drawable.ic_download),
+            title = stringResource(R.string.download),
+            icon = PexelsIcons.Download,
             onClick = {}
         )
 
@@ -150,7 +147,7 @@ fun TopDetailsBar(
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
         BackButton(
-            icon = painterResource(R.drawable.ic_back),
+            icon = PexelsIcons.Back,
             onBackPressed = onBackPressed
         )
         Text(
