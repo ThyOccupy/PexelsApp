@@ -31,12 +31,17 @@ fun MainScreen() {
             navHostController = navigationState.navHostController,
             imagesHeadersScreenContent = {
                 HomeScreen { photo ->
-                    navigationState.navigateToDetails(photo)
+                    val navBackStack = navigationState.navHostController.currentBackStackEntry
+                    val route = navBackStack?.destination?.route ?: throw IllegalStateException()
+                    navigationState.navigateToDetails(photo, route)
                 }
             },
             bookmarkScreenContent = { Text(text = "BookmarkScreen", color = Color.Black) },
-            detailsScreenContent = {id ->
-                DetailsScreen(id, onBackPressed = {
+            detailsScreenContent = {id,route ->
+                DetailsScreen(
+                    photoId = id,
+                    route = route,
+                    onBackPressed = {
                     navigationState.goBack()
                 })
             },

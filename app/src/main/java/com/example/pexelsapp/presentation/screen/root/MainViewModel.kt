@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.example.pexelsapp.domain.usecase.GetHeaderUseCase
-import com.example.pexelsapp.domain.usecase.GetPhotosUseCase
+import com.example.pexelsapp.domain.usecase.interfaces.GetHeaderUseCase
+import com.example.pexelsapp.domain.usecase.interfaces.GetPhotosUseCase
 import com.example.pexelsapp.presentation.model.HeaderUiEntity
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.events.HomeScreenEvent

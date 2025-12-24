@@ -27,21 +27,28 @@ import com.example.pexelsapp.presentation.common.components.photo.PhotoCard
 import com.example.pexelsapp.presentation.common.components.button.BackButton
 import com.example.pexelsapp.presentation.common.components.button.BookmarkButton
 import com.example.pexelsapp.presentation.common.components.button.DownloadButton
+import com.example.pexelsapp.presentation.common.navigation.Screen
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
 import com.example.pexelsapp.presentation.screen.details.DetailsScreenViewModel
 
 @Composable
 fun DetailsScreen(
-    photoId: Int?,
+    photoId: Int,
+    route: String,
     viewModel: DetailsScreenViewModel = hiltViewModel(),
         onBackPressed: () -> Unit
 ) {
 
-    photoId?.let {
-        DetailsScreenEvent.onInitEvent(it)
-    }?.let {
-        viewModel.onEvent(it)
-    } ?: Stub()
+    when(route){
+        Screen.NestedHome.route -> {
+            val initialEvent = DetailsScreenEvent.InitPhotoApi(photoId)
+            viewModel.onEvent(initialEvent)
+        }
+        Screen.Bookmark.route -> {
+            val initialEvent = DetailsScreenEvent.InitPhotoDb(photoId)
+            viewModel.onEvent(initialEvent)
+        }
+    }
 
     val photoModel = viewModel.photoModel.collectAsState().value
     photoModel?.let{
@@ -78,7 +85,7 @@ fun DetailsScreenLayout(
                 }
             }
             item {
-                DetailedBar()
+                DetailedBar(isBookmarked = photoModel.isBookmarked)
             }
         }
     }
@@ -95,7 +102,9 @@ Text("Stub is opened")
 
 
 @Composable
-fun DetailedBar () {
+fun DetailedBar(
+    isBookmarked: Boolean
+) {
 
     Row(
         modifier = Modifier
@@ -104,14 +113,16 @@ fun DetailedBar () {
         verticalAlignment = Alignment.CenterVertically
     ) {
         DownloadButton(
-            title = stringResource(R.string.download),
+title = stringResource(R.string.download),
             icon = painterResource(R.drawable.ic_download),
             onClick = {}
         )
 
         Spacer(Modifier.weight(1f))
 
-        BookmarkButton {}
+        BookmarkButton(
+            isBookmarked = isBookmarked,
+        ){}
     }
 }
 

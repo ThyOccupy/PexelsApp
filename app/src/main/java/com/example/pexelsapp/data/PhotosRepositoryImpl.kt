@@ -14,6 +14,8 @@ import com.example.pexelsapp.domain.model.PhotoModel
 import com.example.pexelsapp.data.database.PexelsDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -51,10 +53,17 @@ class PhotosRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPhotoById(id: Int): Flow<PhotoModel> {
+    override suspend fun getPhotoByIdApi(id: Int): Flow<PhotoModel> {
+        return flow {
+            val photoModel = api.getPhotoById(id = id).toEntity().toModel()
+            emit(photoModel)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getPhotoByIdDb(id: Int): Flow<PhotoModel> {
         return withContext(Dispatchers.IO) {
-            return@withContext database.pexelsDao.getFromDbById(id).map { photoEntity ->
-                photoEntity.toModel()
+            return@withContext database.pexelsDao.getFromDbById(id).map {
+                it.toModel()
             }
         }
     }

@@ -3,6 +3,7 @@ package com.example.pexelsapp.domain.usecase
 import androidx.paging.PagingData
 import com.example.pexelsapp.domain.PhotoRepository
 import com.example.pexelsapp.domain.model.PhotoModel
+import com.example.pexelsapp.domain.usecase.interfaces.GetPhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

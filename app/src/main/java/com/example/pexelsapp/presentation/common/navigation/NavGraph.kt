@@ -11,7 +11,7 @@ fun NavGraph(
     navHostController: NavHostController,
     imagesHeadersScreenContent: @Composable () -> Unit,
     bookmarkScreenContent: @Composable () -> Unit,
-    detailsScreenContent: @Composable (photoId: Int) -> Unit,
+    detailsScreenContent: @Composable (photoId: Int, route: String) -> Unit,
     modifier: Modifier = Modifier
     ) {
 
