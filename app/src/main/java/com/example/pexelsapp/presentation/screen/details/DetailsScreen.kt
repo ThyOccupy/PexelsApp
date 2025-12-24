@@ -64,6 +64,9 @@ fun DetailsScreen(
             onBackPressed = onBackPressed,
             onDownloadClicked = {
                 viewModel.onEvent(DetailsScreenEvent.OnDownloadClicked(it))
+            },
+            onBookmarkClicked = {
+                viewModel.onEvent(DetailsScreenEvent.OnBookmarkClicked(it))
             }
         )
     } else {
@@ -77,7 +80,8 @@ fun DetailsScreenLayout(
     isLoadingData: Boolean,
     photoModel: PhotoUiEntity,
     onBackPressed: () -> Unit,
-    onDownloadClicked: (PhotoUiEntity) -> Unit
+    onDownloadClicked: (PhotoUiEntity) -> Unit,
+    onBookmarkClicked: (PhotoUiEntity) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -108,6 +112,9 @@ fun DetailsScreenLayout(
                     isBookmarked = photoModel.isBookmarked,
                     onDownloadClicked = {
                         onDownloadClicked(photoModel)
+                    },
+                    onBookmarkClicked = {
+                        onBookmarkClicked(photoModel)
                     }
                 )
             }
@@ -127,7 +134,8 @@ fun Stub(isLoading: Boolean) {
 @Composable
 fun DetailedBar(
     isBookmarked: Boolean,
-    onDownloadClicked: () -> Unit
+    onDownloadClicked: () -> Unit,
+    onBookmarkClicked: () -> Unit
 ) {
 
     Row(
@@ -146,7 +154,8 @@ fun DetailedBar(
 
         BookmarkButton(
             isBookmarked = isBookmarked,
-        ) {}
+            onBookmarkClicked = onBookmarkClicked
+        )
     }
 }
 

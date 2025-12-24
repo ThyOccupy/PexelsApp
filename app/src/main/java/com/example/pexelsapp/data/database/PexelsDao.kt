@@ -20,4 +20,7 @@ interface PexelsDao {
 
     @Query("SELECT * FROM PexelsEntity WHERE id = :id")
     fun getFromDbById(id: Int): Flow<PexelsEntity>
+
+    @Query("UPDATE PexelsEntity SET isBookmarked = NOT isBookmarked WHERE id = :id")
+    suspend fun toggleBookmarkStatus(id: Int)
 }

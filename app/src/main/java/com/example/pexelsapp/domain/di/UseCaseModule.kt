@@ -7,9 +7,11 @@ import com.example.pexelsapp.domain.usecase.GetPhotoByIdApiUseCaseImpl
 import com.example.pexelsapp.domain.usecase.GetPhotoByIdDbUseCaseImpl
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotosUseCase
 import com.example.pexelsapp.domain.usecase.GetPhotosUseCaseImpl
+import com.example.pexelsapp.domain.usecase.SwitchBookmarkStatusUseCaseImpl
 import com.example.pexelsapp.domain.usecase.interfaces.DownloadImageUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdApiUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdDbUseCase
+import com.example.pexelsapp.domain.usecase.interfaces.SwitchBookmarkStatusUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -44,6 +46,9 @@ abstract class UseCaseModule {
         downloadImageUseCaseImpl: DownloadImageUseCaseImpl
     ): DownloadImageUseCase
 
-
+    @Binds
+    abstract fun bindSwitchBookmarkStatusUseCase(
+        switchBookmarkStatusUseCaseImpl: SwitchBookmarkStatusUseCaseImpl
+    ): SwitchBookmarkStatusUseCase
 
 }
