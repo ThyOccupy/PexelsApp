@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PexelsApp</string>
+    <string name="search_hint">Поиск</string>
+    <string name="no_results_found">Ничего не найдено</string>
+    <string name="no_bookmark_found">Вы пока ничего не сохранили</string>
+    <string name="explore">Смотреть</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="error_400">Проверьте корректность запроса</string>
+    <string name="error_401">Требуется авторизация</string>
+    <string name="error_403">Доступ ограничен</string>
+    <string name="error_404">Данные не найдены</string>
+    <string name="error_429">Слишком много запросов. Повторите попытку через минуту</string>
+    <string name="error_500">Временные проблемы с сервером</string>
+    <string name="error_502">Сервис временно недоступен</string>
+    <string name="error_unknown_host">Сервер не найден. Проверьте подключение к интернету и попробуйте снова</string>
+    <string name="error_connect">Не удается подключиться к серверу. Возможно, сервер временно недоступен. Повторите попытку позже</string>
+    <string name="error_timeout">Сервер слишком долго не отвечает. Проверьте подключение к интернету и попробуйте снова</string>
+    <string name="download">Скачать</string>
+    <string name="back">Назад</string>
+    <string name="failed_to_retrieve_data_error">Не удалось получить данные. Ошибка: %1$s</string>
+    <string name="unexpected_error">Неожиданная ошибка: %1$s</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="toast_error">Ошибка: %1$s</string>
+    <string name="image_not_found">Изображение не найдено</string>
+</resources>
