@@ -17,11 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pexelsapp.R
+import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 import com.example.pexelsapp.presentation.theme.PexelsAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,8 +57,8 @@ fun SearchBar(
                 placeholder = { Text(text = stringResource(R.string.search_hint)) },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "search icon",
+                        painter = PexelsIcons.Search,
+                        contentDescription = null,
                         tint = Color.Unspecified
                     )
                 },
@@ -74,7 +74,7 @@ fun SearchBar(
                             }
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_cancel),
+                                painter = PexelsIcons.Cansel,
                                 contentDescription = "Clear search",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
