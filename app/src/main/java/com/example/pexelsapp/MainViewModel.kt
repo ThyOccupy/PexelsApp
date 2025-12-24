@@ -3,6 +3,7 @@ package com.example.pexelsapp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.pexelsapp.domain.usecase.GetHeaderUseCase
 import com.example.pexelsapp.domain.usecase.GetPhotosUseCase
@@ -24,7 +25,7 @@ class MainViewModel @Inject constructor(
     private val getHeaderUseCase: GetHeaderUseCase
 ) : ViewModel() {
 
-    private val _query = MutableStateFlow("Christmas")
+    private val _query = MutableStateFlow("")
     val query: StateFlow<String> get() = _query
 
     private val _photos =
@@ -60,7 +61,7 @@ class MainViewModel @Inject constructor(
                         pagingData.map { photoModel ->
                             photoModel.toUiEntity()
                         }
-                    }
+                    }.cachedIn(viewModelScope)
                     .collectLatest { transformedPagingData ->
                         _photos.value = transformedPagingData
                     }
