@@ -20,4 +20,5 @@
     <string name="unexpected_error">Unexpected Error: %1$s</string>
     <string name="unknown_error">Unknown error</string>
     <string name="toast_error">Error: %1$s</string>
+    <string name="image_not_found">Image not found</string>
 </resources>
