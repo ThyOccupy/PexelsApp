@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.pexelsapp.R
 import com.example.pexelsapp.presentation.common.components.photo.PhotoCard
 import com.example.pexelsapp.presentation.common.components.button.BackButton
