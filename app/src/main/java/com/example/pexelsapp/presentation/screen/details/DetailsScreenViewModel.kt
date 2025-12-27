@@ -1,6 +1,5 @@
 package com.example.pexelsapp.presentation.screen.details
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pexelsapp.domain.usecase.interfaces.DownloadImageUseCase
 import com.example.pexelsapp.domain.usecase.interfaces.GetPhotoByIdApiUseCase
@@ -9,6 +8,7 @@ import com.example.pexelsapp.domain.usecase.interfaces.SwitchBookmarkStatusUseCa
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.events.DetailsScreenEvent
 import com.example.pexelsapp.presentation.model.toUiEntity
+import com.example.pexelsapp.presentation.screen.root.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +21,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val getPhotoByIdDb: GetPhotoByIdDbUseCase,
     private val downloadImageUseCase: DownloadImageUseCase,
     private val switchBookmarkStatusUseCase: SwitchBookmarkStatusUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _photoModel = MutableStateFlow<PhotoUiEntity?>(null)
     val photoModel: StateFlow<PhotoUiEntity?> = _photoModel
@@ -30,26 +30,34 @@ class DetailsScreenViewModel @Inject constructor(
     val isLoading: StateFlow<Boolean> = _isLoading
 
 
-
     fun initDataDb(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(errorHandler) {
             _isLoading.value = true
             _photoModel.value = null
-
-            getPhotoByIdDb.execute(id).collect { data ->
-                _photoModel.value = data.toUiEntity()
+            try {
+                getPhotoByIdDb.execute(id).collect { data ->
+                    _photoModel.value = data.toUiEntity()
+                    _isLoading.value = false
+                    _errorState.value = null
+                }
+            } finally {
                 _isLoading.value = false
             }
         }
     }
 
     fun initDataApi(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(errorHandler) {
             _isLoading.value = true
             _photoModel.value = null
 
-            getPhotoByIdApi.execute(id).collect { data ->
-                _photoModel.value = data.toUiEntity()
+            try {
+                getPhotoByIdApi.execute(id).collect { data ->
+                    _photoModel.value = data.toUiEntity()
+                    _isLoading.value = false
+                    _errorState.value = null
+                }
+            } finally {
                 _isLoading.value = false
             }
         }
@@ -64,23 +72,27 @@ class DetailsScreenViewModel @Inject constructor(
             is DetailsScreenEvent.InitPhotoDb -> {
                 initDataDb(event.photoId)
             }
+
             is DetailsScreenEvent.OnDownloadClicked -> {
                 downloadPhoto(event.photo)
             }
+
             is DetailsScreenEvent.OnBookmarkClicked -> {
                 switchBookmarkStatus(event.photo)
             }
         }
     }
+
     private fun downloadPhoto(photo: PhotoUiEntity) {
-        viewModelScope.launch {
-            downloadImageUseCase.execute(photo.url, photo.id)
+        viewModelScope.launch(errorHandler) {
+                downloadImageUseCase.execute(photo.url, photo.id)
         }
     }
+
     private fun switchBookmarkStatus(photo: PhotoUiEntity) {
-        viewModelScope.launch {
-            val isBookmarked = !photo.isBookmarked
-            switchBookmarkStatusUseCase.execute(photo.id, isBookmarked)
+        viewModelScope.launch(errorHandler) {
+                val isBookmarked = !photo.isBookmarked
+                switchBookmarkStatusUseCase.execute(photo.id, isBookmarked)
         }
     }
 }

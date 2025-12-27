@@ -29,17 +29,6 @@ fun SearchBar(
     onQueryChange: (String) -> Unit
 ) {
     var isActive by remember { mutableStateOf(false) }
-/*    val debounce = 500L
-    val coroutineScope = rememberCoroutineScope()
-
-    LaunchedEffect(query) {
-        if (isActive && query.isNotEmpty()) {
-            coroutineScope.launch {
-                delay(debounce)
-                onQueryChange(query)
-            }
-        }
-    }*/
 
     SearchBar(
         inputField = {

@@ -1,6 +1,5 @@
 package com.example.pexelsapp.presentation.screen.home
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -12,7 +11,9 @@ import com.example.pexelsapp.presentation.model.HeaderUiEntity
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.model.toHeaderUiEntity
 import com.example.pexelsapp.presentation.model.toUiEntity
+import com.example.pexelsapp.presentation.screen.root.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -21,11 +22,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val getPhotosUseCase: GetPhotosUseCase,
     private val getHeaderUseCase: GetHeaderUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> get() = _query
@@ -43,7 +45,6 @@ class HomeScreenViewModel @Inject constructor(
     private var originalTitles = listOf<HeaderUiEntity>()
 
 
-
     init {
         initialPhotos()
         initialTitles()
@@ -53,9 +54,10 @@ class HomeScreenViewModel @Inject constructor(
         when (event) {
             is HomeScreenEvent.OnSearchQueryChange -> setQuery(event.query)
             is HomeScreenEvent.OnExploreClicked -> initialPhotos()
-            is HomeScreenEvent.onRetryClicked -> initialPhotos()
+            is HomeScreenEvent.OnRetryClicked -> initialPhotos()
         }
     }
+
     fun checkAndMoveTitle(query: String) {
         val updatedTitles = _titles.value.map { title ->
             if (title.name == query) {
@@ -87,32 +89,40 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun initialPhotos() {
-        viewModelScope.launch {
-            query.flatMapLatest { queryValue ->
-                getPhotosUseCase.execute(queryValue)
-                    .map { pagingData ->
-                        pagingData.map { photoModel ->
-                            photoModel.toUiEntity()
-                        }
-                    }.cachedIn(viewModelScope)
-            }
-                .collectLatest { transformedPagingData ->
-                    _photos.value = transformedPagingData
+        viewModelScope.launch(errorHandler) {
+            try {
+                query.flatMapLatest { queryValue ->
+                    getPhotosUseCase.execute(queryValue)
+                        .map { pagingData ->
+                            pagingData.map { photoModel ->
+                                photoModel.toUiEntity()
+                            }
+                        }.cachedIn(viewModelScope)
                 }
+                    .collectLatest { transformedPagingData ->
+                        _photos.value = transformedPagingData
+                        _isLoading.value = false
+                        _errorState.value = null
+                    }
+            } finally {
+                _isLoading.value = false
+            }
         }
-        updateIsLoading()
+
     }
 
     private fun initialTitles() {
-        viewModelScope.launch {
-            val headers = getHeaderUseCase.execute().map {
-                it.toHeaderUiEntity()
+        viewModelScope.launch(errorHandler) {
+            try {
+                val headers = getHeaderUseCase.execute().map {
+                    it.toHeaderUiEntity()
+                }
+                _titles.value = headers
+                _isLoading.value = false
+                _errorState.value = null
+            } finally {
+                _isLoading.value = false
             }
-            _titles.value = headers
         }
-    }
-
-    private fun updateIsLoading() {
-        _isLoading.value = false
     }
 }

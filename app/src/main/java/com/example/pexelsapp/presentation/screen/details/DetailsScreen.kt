@@ -1,3 +1,4 @@
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,6 +46,21 @@ fun DetailsScreen(
     onBackPressed: () -> Unit,
     onExploreClick: () -> Unit
 ) {
+
+    val errorState = viewModel.errorState.collectAsState()
+    val errorResId = errorState.value
+    if (errorResId != null) {
+        val context = LocalContext.current
+        val errorText = stringResource(errorResId)
+        LaunchedEffect(key1 = photoId) {
+            Toast.makeText(
+                context,
+                errorText,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     LaunchedEffect(photoId, route) {
         when (route) {
             Screen.NestedHome.route -> {
@@ -61,10 +78,12 @@ fun DetailsScreen(
     val photoModel by viewModel.photoModel.collectAsState()
     val isLoadingData by viewModel.isLoading.collectAsState()
 
-    if (photoModel != null) {
+    val currentPhoto = photoModel
+
+    if (currentPhoto != null) {
         DetailsScreenLayout(
             isLoadingData = isLoadingData,
-            photoModel = photoModel!!,
+            photoModel = currentPhoto,
             onBackPressed = onBackPressed,
             onDownloadClicked = {
                 viewModel.onEvent(DetailsScreenEvent.OnDownloadClicked(it))
@@ -173,61 +192,61 @@ fun Stub(
 }
 
 
-    @Composable
-    fun DetailedBar(
-        isBookmarked: Boolean,
-        onDownloadClicked: () -> Unit,
-        onBookmarkClicked: () -> Unit
+@Composable
+fun DetailedBar(
+    isBookmarked: Boolean,
+    onDownloadClicked: () -> Unit,
+    onBookmarkClicked: () -> Unit
+) {
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        DownloadButton(
+            title = stringResource(R.string.download),
+            icon = PexelsIcons.Download,
+            onClick = onDownloadClicked
+        )
 
-        Row(
+        Spacer(Modifier.weight(1f))
+
+        BookmarkButton(
+            isBookmarked = isBookmarked,
+            onBookmarkClicked = onBookmarkClicked
+        )
+    }
+}
+
+@Composable
+fun TopDetailsBar(
+    photographerName: String,
+    onBackPressed: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colorScheme.background
+            )
+            .padding(horizontal = 24.dp, vertical = 12.dp)
+    ) {
+        BackButton(
+            icon = PexelsIcons.Back,
+            onBackPressed = onBackPressed
+        )
+        Text(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            DownloadButton(
-                title = stringResource(R.string.download),
-                icon = PexelsIcons.Download,
-                onClick = onDownloadClicked
-            )
+                .align(Alignment.Center),
+            text = photographerName,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.onBackground
 
-            Spacer(Modifier.weight(1f))
-
-            BookmarkButton(
-                isBookmarked = isBookmarked,
-                onBookmarkClicked = onBookmarkClicked
-            )
-        }
+        )
     }
 
-    @Composable
-    fun TopDetailsBar(
-        photographerName: String,
-        onBackPressed: () -> Unit
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    MaterialTheme.colorScheme.background
-                )
-                .padding(horizontal = 24.dp, vertical = 12.dp)
-        ) {
-            BackButton(
-                icon = PexelsIcons.Back,
-                onBackPressed = onBackPressed
-            )
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center),
-                text = photographerName,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onBackground
 
-            )
-        }
-
-
-    }
+}
