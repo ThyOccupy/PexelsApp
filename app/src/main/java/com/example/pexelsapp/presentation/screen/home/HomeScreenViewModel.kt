@@ -101,7 +101,6 @@ class HomeScreenViewModel @Inject constructor(
                 }
                     .collectLatest { transformedPagingData ->
                         _photos.value = transformedPagingData
-                        _isLoading.value = false
                         _errorState.value = null
                     }
             } finally {
@@ -118,7 +117,6 @@ class HomeScreenViewModel @Inject constructor(
                     it.toHeaderUiEntity()
                 }
                 _titles.value = headers
-                _isLoading.value = false
                 _errorState.value = null
             } finally {
                 _isLoading.value = false
