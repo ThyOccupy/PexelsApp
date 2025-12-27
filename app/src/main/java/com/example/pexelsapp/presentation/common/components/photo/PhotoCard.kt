@@ -73,6 +73,6 @@ fun PhotoCard(
     }
 }
 
-private fun countSize(width: Int, height: Int): Float {
+fun countSize(width: Int, height: Int): Float {
     return width.toFloat() / height
 }

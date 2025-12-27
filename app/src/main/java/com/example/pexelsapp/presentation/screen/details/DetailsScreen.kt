@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.pexelsapp.R
-import com.example.pexelsapp.presentation.common.components.photo.PhotoCard
 import com.example.pexelsapp.presentation.common.components.button.BackButton
 import com.example.pexelsapp.presentation.common.components.button.BookmarkButton
 import com.example.pexelsapp.presentation.common.components.button.DownloadButton
+import com.example.pexelsapp.presentation.common.components.photo.ZoomablePhoto
 import com.example.pexelsapp.presentation.common.components.toolbar.ProgressBar
 import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 import com.example.pexelsapp.presentation.navigation.Screen
@@ -122,31 +121,25 @@ fun DetailsScreenLayout(
         ProgressBar(
             isLoading = isLoadingData
         )
-        LazyColumn(
+        Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            item {
-                PhotoCard(
-                    modifier = Modifier
-                        .padding(24.dp),
-                    photo = photoModel,
-                ) {
+            ZoomablePhoto(
+                photo = photoModel,
+                modifier = Modifier
+                    .padding(start = 24.dp, end = 24.dp, top = 12.dp)
+            )
+            DetailedBar(
+                isBookmarked = photoModel.isBookmarked,
+                onDownloadClicked = {
+                    onDownloadClicked(photoModel)
+                },
+                onBookmarkClicked = {
+                    onBookmarkClicked(photoModel)
                 }
-            }
-            item {
-                DetailedBar(
-                    isBookmarked = photoModel.isBookmarked,
-                    onDownloadClicked = {
-                        onDownloadClicked(photoModel)
-                    },
-                    onBookmarkClicked = {
-                        onBookmarkClicked(photoModel)
-                    }
-                )
-            }
+            )
         }
     }
-
 }
 
 @Composable
