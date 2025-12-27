@@ -27,15 +27,12 @@ import com.example.pexelsapp.R
 import com.example.pexelsapp.presentation.common.components.button.StubButton
 import com.example.pexelsapp.presentation.common.drawable.PexelsIcons
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
-import retrofit2.HttpException
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 
 @Composable
 fun PhotoGrid(
     photosList: LazyPagingItems<PhotoUiEntity>,
     errorMessage: String,
+    errorResId: Int? = null,
     isBookmarkScreen: Boolean = false,
     onPhotoClick: (PhotoUiEntity) -> Unit,
     onExploreClick: () -> Unit,
@@ -63,6 +60,7 @@ fun PhotoGrid(
         NoResultsStub(
             photosList = photosList,
             errorMessage = errorMessage,
+            errorResId = errorResId,
             onExploreClick = onExploreClick,
             onRetryClick = onRetryClick
         )
@@ -74,40 +72,26 @@ fun PhotoGrid(
 fun NoResultsStub(
     photosList: LazyPagingItems<PhotoUiEntity>,
     errorMessage: String,
+    errorResId: Int?,
     onExploreClick: () -> Unit,
     onRetryClick: () -> Unit
 ) {
+
+    if (errorResId != null) {
+        val context = LocalContext.current
+        val errorText =  stringResource(errorResId)
+        LaunchedEffect(key1 = photosList.loadState) {
+            Toast.makeText(
+                context,
+                errorText,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     when {
-        photosList.loadState.refresh is LoadState.NotLoading && photosList.itemCount == 0 -> {
-
-            val context = LocalContext.current
-            LaunchedEffect(key1 = photosList.loadState) {
-                if (photosList.loadState.refresh is LoadState.Error) {
-                    val error = (photosList.loadState.refresh as LoadState.Error).error.apply {
-                        when (this) {
-                            is HttpException -> when (this.code()) {
-                                400 -> R.string.error_400
-                                401 -> R.string.error_400
-                                403 -> R.string.error_400
-                                404 -> R.string.error_400
-                                429 -> R.string.error_400
-                                500 -> R.string.error_400
-                                502 -> R.string.error_400
-                                else -> "${R.string.failed_to_retrieve_data_error}${this.message}"
-                            }
-
-                            is UnknownHostException -> R.string.error_unknown_host
-                            is ConnectException -> R.string.error_connect
-                            is SocketTimeoutException -> R.string.error_timeout
-                            else -> {
-                                "${R.string.unexpected_error}${this.message}"
-                            }
-                        }
-                    }
-
-                    Toast.makeText(context, "${R.string.toast_error}$error", Toast.LENGTH_LONG).show()
-                }
-            }
+        photosList.loadState.refresh
+                is LoadState.NotLoading && photosList.itemCount == 0 -> {
 
             Column(
                 modifier = Modifier

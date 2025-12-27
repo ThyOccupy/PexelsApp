@@ -18,9 +18,6 @@
     <string name="download">Download</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="back">Back</string>
-    <string name="failed_to_retrieve_data_error">Failed to retrieve data. Error: %1$s</string>
-    <string name="unexpected_error">Unexpected Error: %1$s</string>
-    <string name="unknown_error">Unknown error</string>
-    <string name="toast_error">Error: %1$s</string>
+    <string name="unknown_error">Unexpected error. Please try again later</string>
     <string name="image_not_found">Image not found</string>
 </resources>

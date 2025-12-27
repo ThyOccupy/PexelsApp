@@ -5,6 +5,7 @@ import com.example.pexelsapp.utils.Const.DEFAULT_FEATURED_NUMBER
 import com.example.pexelsapp.data.source.dto.GetQueryPhotosResponseBody
 import com.example.pexelsapp.data.source.dto.PhotoDto
 import com.example.pexelsapp.data.source.dto.QueryCollectionsDto
+import com.example.pexelsapp.utils.Const.DEFAULT_PAGE_NUMBER
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,13 +15,13 @@ interface PexelsApi {
     @GET("search")
     suspend fun getPhotosByQuery(
         @Query(QUERY_PARAM_QUERY) query: String,
-        @Query(QUERY_PARAM_PAGE) page: Int,
-        @Query(QUERY_PARAM_PER_PAGE) pageCount: Int
+        @Query(QUERY_PARAM_PAGE) page: Int  = DEFAULT_PAGE_NUMBER,
+        @Query(QUERY_PARAM_PER_PAGE) pageCount: Int = DEFAULT_CURATED_LIMIT
     ):  GetQueryPhotosResponseBody
 
     @GET("curated")
     suspend fun getPopularPhotos(
-        @Query(QUERY_PARAM_PAGE) page: Int,
+        @Query(QUERY_PARAM_PAGE) page: Int = DEFAULT_PAGE_NUMBER,
         @Query(QUERY_PARAM_PER_PAGE) pageCount: Int = DEFAULT_CURATED_LIMIT
     ): GetQueryPhotosResponseBody
 

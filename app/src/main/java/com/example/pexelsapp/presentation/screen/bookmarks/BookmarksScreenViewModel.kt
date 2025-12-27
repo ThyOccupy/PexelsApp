@@ -1,6 +1,5 @@
 package com.example.pexelsapp.presentation.screen.bookmarks
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -8,6 +7,7 @@ import androidx.paging.map
 import com.example.pexelsapp.domain.usecase.interfaces.GetBookmarksUseCase
 import com.example.pexelsapp.presentation.model.PhotoUiEntity
 import com.example.pexelsapp.presentation.model.toUiEntity
+import com.example.pexelsapp.presentation.screen.root.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarksScreenViewModel @Inject constructor(
     private val getBookmarksUseCase: GetBookmarksUseCase
-): ViewModel(){
+): BaseViewModel(){
     private val _bookmarks = MutableStateFlow<PagingData<PhotoUiEntity>>(PagingData.empty())
     val bookmarks: StateFlow<PagingData<PhotoUiEntity>> = _bookmarks
 
@@ -31,18 +31,23 @@ class BookmarksScreenViewModel @Inject constructor(
     }
 
     private fun getBookmarks() {
-        viewModelScope.launch {
-            getBookmarksUseCase.execute()
-                .map { pagingData ->
-                    pagingData.map { photoModel ->
-                        photoModel.toUiEntity()
-                    }
-                }.cachedIn(viewModelScope)
+        viewModelScope.launch(errorHandler) {
+            try {
+                getBookmarksUseCase.execute()
+                    .map { pagingData ->
+                        pagingData.map { photoModel ->
+                            photoModel.toUiEntity()
+                        }
+                    }.cachedIn(viewModelScope)
 
-                .collectLatest { transformedData ->
-                    _bookmarks.value = transformedData
-                    _isLoading.value = false
-                }
+                    .collectLatest { transformedData ->
+                        _bookmarks.value = transformedData
+                        _isLoading.value = false
+                        _errorState.value = null
+                    }
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.pexelsapp.R
@@ -30,13 +30,14 @@ fun BookmarksScreen(
     onPhotoClick: (PhotoUiEntity) -> Unit,
     onExploreClick: () -> Unit
 ) {
-
+    val errorState = viewModel.errorState.collectAsState()
     val bookmarks = viewModel.bookmarks.collectAsLazyPagingItems()
     val isLoading by viewModel.isLoading.collectAsState()
 
     BookmarksScreenLayout(
         photos = bookmarks,
         isLoading = isLoading,
+        errorResId = errorState.value,
         onNavigateClick = {photo ->
             onPhotoClick (photo)
         },
@@ -49,6 +50,7 @@ fun BookmarksScreen(
 fun BookmarksScreenLayout(
     photos: LazyPagingItems<PhotoUiEntity>,
     isLoading: Boolean,
+    errorResId: Int?,
     onExploreClick: () -> Unit,
     onNavigateClick: (PhotoUiEntity) -> Unit
 ) {
@@ -72,6 +74,7 @@ fun BookmarksScreenLayout(
         PhotoGrid (
             photosList = photos,
             errorMessage = stringResource(R.string.no_bookmark_found),
+            errorResId = errorResId,
             onExploreClick = onExploreClick,
             onRetryClick = { },
             onPhotoClick = {photo -> onNavigateClick(photo) },
