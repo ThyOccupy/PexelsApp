@@ -30,7 +30,7 @@ fun HomeScreen(
     onPhotoClick: (PhotoUiEntity) -> Unit
 ) {
     val errorState = viewModel.errorState.collectAsState()
-        Column(
+    Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)

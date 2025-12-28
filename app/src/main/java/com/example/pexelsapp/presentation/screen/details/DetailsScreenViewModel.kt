@@ -37,6 +37,7 @@ class DetailsScreenViewModel @Inject constructor(
             try {
                 getPhotoByIdDb.execute(id).collect { data ->
                     _photoModel.value = data.toUiEntity()
+                    _isLoading.value = false
                     _errorState.value = null
                 }
             } finally {
@@ -53,6 +54,7 @@ class DetailsScreenViewModel @Inject constructor(
             try {
                 getPhotoByIdApi.execute(id).collect { data ->
                     _photoModel.value = data.toUiEntity()
+                    _isLoading.value = false
                     _errorState.value = null
                 }
             } finally {
